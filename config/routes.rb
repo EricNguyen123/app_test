@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   
+  get '/auth/:provider/callback', to: 'sessions#omniauth'
+
   get '/settings', to: 'users#edit'
   resources :users do
     member do
