@@ -15,5 +15,8 @@
             <%= f.submit "Log in", class: "btn btn-primary" %> 
         <% end %>
         <p>New user? <%= link_to "Sign up now!", signup_path %></p> 
+        <%= link_to image_tag("web_light_rd_SI@1x.png", height: "42"), '/auth/google_oauth2' %>
+        <%= link_to image_tag("GitHub_Logo.png", height: "42"), '/auth/github' %>
+        <%= link_to image_tag("facebook_login_icon.png", height: "42"), '/auth/facebook' %>
     </div>
 </div>
