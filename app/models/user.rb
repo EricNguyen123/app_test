@@ -79,6 +79,15 @@ class User < ApplicationRecord
         following.include?(other_user)
     end
 
+    def login_with_third_party(req_evn)
+        user = User.find_or_create_by(uid: req_evn.dig('omniauth.auth', 'uid'),
+                                  provider: req_evn.dig('omniauth.auth', 'provider')) do |user|
+            user.name = req_evn.dig('omniauth.auth', 'info', 'name') || req_evn.dig('omniauth.auth', 'info', 'nickname') 
+            user.email = req_evn.dig('omniauth.auth', 'info', 'email') || "#{user.name}@gmail.com"
+            user.password = SecureRandom.urlsafe_base64
+        end
+    end
+
     private
     # Converts email to all lower-case.
         def downcase_email
