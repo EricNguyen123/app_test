@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
   def new
+    @items = [
+      {links: '/auth/google_oauth2', name: 'Google', image: 'google-18px.svg'},
+      {links: '/auth/facebook', name: 'Facebook', image: 'facebook-18px.svg'},
+      {links: '/auth/github', name: 'Github', image: 'github-18px.svg'}
+    ]
+    
   end
 
   def create 
