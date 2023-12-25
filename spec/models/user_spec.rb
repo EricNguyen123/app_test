@@ -20,7 +20,7 @@ RSpec.describe SessionsController, type: :controller do
 
   it 'sessions new' do
     user = FactoryBot.create(:user)
-    post :create, params: { session: { email: 'john@example.com', password: 'password' } }
+    post :create, params: { session: { email: user.email, password: 'password' } }
     expect(response).to redirect_to root_url
   end
 

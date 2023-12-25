@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    uid { '123456' }
+    uid {Faker::Number.number(digits: 6) }
     provider { 'some_provider' }
 
     name { 'John Doe' }
