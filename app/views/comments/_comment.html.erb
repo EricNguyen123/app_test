@@ -1,0 +1,29 @@
+<%= javascript_include_tag "comment", "data-track-turbo": "true", defer: true %>
+<div class="blog-comment">
+  <div class="item-comment" id="<%= dom_id comment %>">
+    <p class="content-comment">
+      <strong><%= User.find_by(id: comment.user_id).name%></strong>
+      <span class="time-comment"><%= comment.created_at.to_s[0...10]%></span>
+      <br>
+      <%= comment.content %>
+      <%= link_to image_tag(comment.display_image), comment.image if comment.image.attached?%>
+    </p>
+    <div class="box-btn-option">   
+      <div class="btn-reply-<%= dom_id comment %>">
+        <%= link_to "Reply this comment"%>
+      </div>
+      <div class="delete-comment">
+        <%= link_to "Destroy this comment", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="reply-list">
+    <div class="reply-comment">
+      <%= render "comments/reply", rootCmt: comment%>
+    </div>
+    <div class="box-reply box-reply-<%= dom_id comment %>">
+      <%= render "comments/reply_form", rootCmt: comment, comment: @comment %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<%= form_with(model: [micropost, comment], local: true) do |form| %>
+  <% if comment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :user_id, value: current_user.id%>
+  <%= form.hidden_field :micropost_id, value: micropost.id if !micropost.nil? %>
+  <div>
+    <%= form.label :Comment, style: "display: block" %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+  <span class="image">
+    <%= form.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
+  </span>
+<% end %>

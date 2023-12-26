@@ -6,6 +6,7 @@ class Micropost < ApplicationRecord
   validates :content, presence: true, length: { maximum: 140 }
   validate :image_content_type
   validate :image_size
+  has_many :comments, dependent: :destroy
   def image_content_type
     if image.attached? && !image.content_type.in?(%w[image/jpeg image/gif image/png])
       errors.add(:image, "must be a valid image format")

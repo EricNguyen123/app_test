@@ -11,4 +11,10 @@
             <%= link_to "delete", micropost, data: { turbo_method: :delete, confirm: "You sure?" } %>
         <% end %>
     </span>
+    <div class="comment-box">
+        <ol class="comments">
+            <%= render micropost.comments.where(comment_id: nil) %> 
+        </ol>
+        <%= render "comments/form", micropost: micropost, comment: @comment %>
+    </div>
 </li>

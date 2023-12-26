@@ -368,3 +368,56 @@ img {
     align-items: center;
     justify-content: center;
 }
+
+.blog-comment {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.item-comment {
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    .content-comment {
+        margin: 3px 10px;
+        padding: 3px;
+    }
+
+    .time-comment{
+        font-size: 11px;
+    }
+
+    .box-btn-option {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 15px;
+        padding-bottom: 5px;
+        .delete-comment{
+            margin-left: 10px;
+        }
+    }
+}
+
+
+
+.reply-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    .reply-comment {
+        width: 92%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-left: 8%;
+    }
+    .box-reply{
+    
+    }
+}

@@ -1,0 +1,16 @@
+<% Comment.where(comment_id: rootCmt).each do |comment|%>
+    <div class="item-comment" id="<%= dom_id comment %>">
+        <p class="content-comment">
+            <strong><%= User.find_by(id: comment.user_id).name%></strong>
+            <span class="time-comment"><%= comment.created_at.to_s[0...10]%></span>
+            <br>
+            <%= comment.content %>
+        </p>
+        <div class="box-btn-option">
+            
+            <div class="delete-comment">
+                <%= link_to "Destroy this comment", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+            </div>
+        </div>
+    </div>
+<%end%>
