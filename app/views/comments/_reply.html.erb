@@ -1,16 +1,25 @@
 <% Comment.where(comment_id: rootCmt).each do |comment|%>
     <div class="item-comment" id="<%= dom_id comment %>">
         <p class="content-comment">
+            <%= link_to gravatar_for(User.find_by(id: comment.user_id), size: 26), User.find_by(id: comment.user_id) %>
             <strong><%= User.find_by(id: comment.user_id).name%></strong>
             <span class="time-comment"><%= comment.created_at.to_s[0...10]%></span>
             <br>
             <%= comment.content %>
+            <br>
+            <%= link_to image_tag(comment.display_image,  width: "100" ), comment.image if comment.image.attached?%>
         </p>
-        <div class="box-btn-option">
-            
-            <div class="delete-comment">
-                <%= link_to "Destroy this comment", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+       <div class="footer-cmt">
+            <span class="timestamp">
+                Comment <%= time_ago_in_words(comment.created_at) %> ago.
+            </span> 
+            <div class="box-btn-option">
+                <% if current_user?(User.find_by(id: comment.user_id))%>
+                    <div class="delete-comment">
+                        <%= link_to "Destroy this comment", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+                    </div>
+                <% end %>
             </div>
-        </div>
+       </div>
     </div>
 <%end%>

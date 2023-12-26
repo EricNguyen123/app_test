@@ -18,11 +18,11 @@
       <%= form.text_area :content %>
     </div>
   
-    <div>
-      <%= form.submit "Reply" %>
+    <div class="btn-submit-cmt">
+      <%= form.submit "Reply", class: "btn btn-primary" %>
     </div>
     <span class="image">
       <%= form.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
-  </span>
-  <% end %>
-  
+    </span>
+<% end %>
+ 

@@ -18,6 +18,6 @@ class Micropost < ApplicationRecord
     end
   end
   def display_image 
-    image.variant(resize_to_limit: [500, 500]).processed
+    image.variant(resize_to_limit: [200, 200]).processed
   end
 end

@@ -1,19 +1,27 @@
-<%= javascript_include_tag "comment", "data-track-turbo": "true", defer: true %>
 <div class="blog-comment">
   <div class="item-comment" id="<%= dom_id comment %>">
     <p class="content-comment">
+      <%= link_to gravatar_for(User.find_by(id: comment.user_id), size: 26), User.find_by(id: comment.user_id) %>
       <strong><%= User.find_by(id: comment.user_id).name%></strong>
       <span class="time-comment"><%= comment.created_at.to_s[0...10]%></span>
       <br>
       <%= comment.content %>
-      <%= link_to image_tag(comment.display_image), comment.image if comment.image.attached?%>
+      <br>
+      <%= link_to image_tag(comment.display_image, width: "100" ), comment.image if comment.image.attached?%>
     </p>
-    <div class="box-btn-option">   
-      <div class="btn-reply-<%= dom_id comment %>">
-        <%= link_to "Reply this comment"%>
-      </div>
-      <div class="delete-comment">
-        <%= link_to "Destroy this comment", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+    <div class="footer-cmt">
+      <span class="timestamp">
+          Comment <%= time_ago_in_words(comment.created_at) %> ago.
+      </span> 
+      <div class="box-btn-option">  
+        <div class="btn-reply btn-reply-<%= dom_id comment %>">
+          <span class="btn-content">Reply this comment</span>
+        </div>
+        <% if current_user?(User.find_by(id: comment.user_id))%>
+          <div class="delete-comment">
+            <%= link_to "Destroy this comment", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -22,8 +30,19 @@
     <div class="reply-comment">
       <%= render "comments/reply", rootCmt: comment%>
     </div>
-    <div class="box-reply box-reply-<%= dom_id comment %>">
+    <div class="box-reply box-reply-<%= dom_id comment %> box-rep-cmt">
       <%= render "comments/reply_form", rootCmt: comment, comment: @comment %>
     </div>
   </div>
 </div>
+
+<script type="text/javascript"> 
+    
+    $('.btn-reply-<%=j dom_id(comment) %>').on("click", ()=>{
+        $('.box-rep-cmt').addClass('box-reply')
+        $('.box-reply-<%=j dom_id(comment) %>').removeClass('box-reply')
+        $('.box-reply-<%=j dom_id(comment) %>').css({
+          display: 'flex !important'
+        })
+    })
+</script>

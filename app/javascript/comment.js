@@ -1,7 +1,7 @@
 $('.btn-reply-<%=j dom_id(comment) %>').on("click", ()=>{
-    alert('You clicked the Hide link');
+    $('div').removeClass('box-reply')
     $('.box-reply-<%=j dom_id(comment) %>').css({
-        display: "block !important",
+        display: "flex !important",
     })
-
+    
 })

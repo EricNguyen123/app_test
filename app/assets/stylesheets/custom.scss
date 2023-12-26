@@ -373,7 +373,10 @@ img {
     width: 100%;
     display: flex;
     flex-direction: column;
-   
+    border: solid 1px #bebebe;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    padding: 5px;
 }
 
 .item-comment {
@@ -389,18 +392,37 @@ img {
     .time-comment{
         font-size: 11px;
     }
-
-    .box-btn-option {
+    .footer-cmt{
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        padding-right: 15px;
-        padding-bottom: 5px;
-        .delete-comment{
-            margin-left: 10px;
+        justify-content: space-between;
+        .timestamp{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-bottom: 5px;
+        }
+        .box-btn-option {
+            width: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            padding-bottom: 5px;
+            .delete-comment{
+                margin-left: 10px;
+            }
+            .btn-content {
+                color: #4376a6;
+                &:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
         }
     }
+    
 }
 
 
@@ -416,6 +438,18 @@ img {
         flex-direction: column;
         justify-content: flex-end;
         margin-left: 8%;
+        padding-left: 5px;
+        border-left: solid 1px #bbb;
+        border-radius: 8px;
     }
    
 }
+
+.btn-submit-cmt{
+    margin-bottom: 10px;
+}
+
+.box-reply {
+    display: none;
+}
+

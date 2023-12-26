@@ -31,6 +31,7 @@ class CommentsController < ApplicationController
       micropost = Micropost.find_by(id: params[:micropost_id]) 
       @comment = micropost.comments.build(comment_params)
     end 
+    @comment.image.attach(params[:comment][:image])
     respond_to do |format|
       if @comment.save
         format.html { redirect_to root_url, notice: "Comment was successfully created." }
@@ -74,7 +75,7 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:content, :user_id, :micropost_id, :comment_id)
+      params.require(:comment).permit(:content, :user_id, :micropost_id, :comment_id, :image)
     end
 
 end
