@@ -1,10 +1,13 @@
+require 'faker'
+
+
 FactoryBot.define do
   factory :user do
     uid {Faker::Number.number(digits: 6) }
-    provider { 'some_provider' }
+    provider { Faker::Omniauth.google[:provider] }
 
-    name { 'John Doe' }
-    email { 'john@example.com' }
-    password { 'password' }
+    name {Faker::Name.name  }
+    email {Faker::Internet.email }
+    password { Faker::Internet.password(min_length: 6) }
   end
 end
