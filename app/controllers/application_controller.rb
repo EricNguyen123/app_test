@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# The base controller for the application.
 class ApplicationController < ActionController::Base
   include SessionsHelper
 

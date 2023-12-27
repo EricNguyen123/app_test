@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -81,8 +83,8 @@ ActiveRecord::Schema[7.1].define(version: 20_231_222_072_450) do
     t.datetime 'confirmation_sent_at'
     t.string 'unconfirmed_email'
     t.string 'activation_tocken'
-    t.string 'uid'
     t.string 'provider'
+    t.string 'uid'
     t.index ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true

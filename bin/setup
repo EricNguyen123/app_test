@@ -1,4 +1,9 @@
 #!/usr/bin/env ruby
+<<<<<<< HEAD
+=======
+# frozen_string_literal: true
+
+>>>>>>> 41387c5 (ref #1 DEV: fix rubocop)
 require 'fileutils'
 
 # path to your application root.

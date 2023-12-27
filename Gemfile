@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
@@ -120,4 +120,4 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github', '~> 2.0.0'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection', '~> 1.0'
+

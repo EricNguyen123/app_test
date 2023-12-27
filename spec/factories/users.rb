@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
+require 'faker'
+
 FactoryBot.define do
   factory :user do
-    uid { '123456' }
-    provider { 'some_provider' }
+    uid { Faker::Number.number(digits: 6) }
+    provider { Faker::Omniauth.google[:provider] }
 
-    name { 'John Doe' }
-    email { 'john@example.com' }
-    password { 'password' }
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    password { Faker::Internet.password(min_length: 6) }
   end
 end

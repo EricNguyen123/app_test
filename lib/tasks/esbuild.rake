@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/tasks/esbuild.rake
 namespace :assets do
   task :compile do

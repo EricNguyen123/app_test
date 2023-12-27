@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Controller responsible for activating user accounts.
 class AccountActivationsController < ApplicationController
   def edit
     user = User.find_by(email: params[:email])

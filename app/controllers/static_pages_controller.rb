@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Controller managing user static page.
 class StaticPagesController < ApplicationController
   def home
     return unless logged_in?
