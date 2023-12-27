@@ -1,14 +1,24 @@
 <li id="micropost-<%= micropost.id %>">
-    <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
-    <span class="user"><%= link_to micropost.user.name, micropost.user %></span> 
-    <span class="content">
-        <%= micropost.content %>
-        <%= link_to image_tag(micropost.display_image), micropost.image if micropost.image.attached?%>
-    </span>
-    <span class="timestamp">
-        Posted <%= time_ago_in_words(micropost.created_at) %> ago. 
-        <% if current_user?(micropost.user) %>
-            <%= link_to "delete", micropost, data: { turbo_method: :delete, confirm: "You sure?" } %>
-        <% end %>
-    </span>
+    <div class="micropost-page">
+        <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+        <span class="user"><%= link_to micropost.user.name, micropost.user %></span> 
+        <span class="content">
+            <%= micropost.content %>
+            <%= link_to image_tag(micropost.display_image), micropost.image if micropost.image.attached?%>
+        </span>
+        <span class="timestamp">
+            Posted <%= time_ago_in_words(micropost.created_at) %> ago. 
+            <% if current_user?(micropost.user) %>
+                <%= link_to "delete", micropost, data: { turbo_method: :delete, confirm: "You sure?" } %>
+            <% end %>
+        </span>
+    </div>
+    <div class="reply-list">
+        <div class="reply-comment">
+            <%= render 'shared/reply', micropost: micropost %> 
+        </div>
+        <div class="box-rep-form">
+            <%= render 'shared/reply_form', micropost: micropost, comment: @micropost %>
+        </div>
+    </div>
 </li>

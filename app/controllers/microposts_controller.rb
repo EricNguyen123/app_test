@@ -5,19 +5,30 @@ class MicropostsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: :destroy
   def create
-    @micropost = current_user.microposts.build(micropost_params)
+    if params[:micropost][:micropost_id]
+      micropost = Micropost.find_by(id: params[:micropost][:micropost_id])
+      @micropost = micropost.microposts.build(micropost_params) 
+    else
+      @micropost = current_user.microposts.build(micropost_params)
+    end 
     @micropost.image.attach(params[:micropost][:image])
     if @micropost.save
       flash[:success] = 'Micropost created!'
       redirect_to root_url
     else
-      @feed_items = current_user.feed.paginate(page: params[:page])
+      @feed_items = current_user.feed.where(micropost_id: nil).paginate(page: params[:page])
       render 'static_pages/home'
     end
   end
 
   def destroy
-    @micropost.destroy
+    deleteMicropost = Micropost.find_by(micropost_id: @micropost.id)
+    while !deleteMicropost.nil? do
+      commented = deleteMicropost
+      deleteMicropost.destroy!
+      deleteMicropost = Micropost.find_by(micropost_id: commented.id) || Micropost.find_by(micropost_id: @micropost.id)
+    end
+    @micropost.destroy!
     flash[:success] = 'Micropost deleted'
     redirect_to request.referrer || root_url
   end
@@ -25,7 +36,7 @@ class MicropostsController < ApplicationController
   private
 
   def micropost_params
-    params.require(:micropost).permit(:content, :image)
+    params.require(:micropost).permit(:content, :image, :micropost_id, :user_id)
   end
 
   def correct_user
