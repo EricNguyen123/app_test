@@ -118,8 +118,8 @@ gem 'pry-rails', :group => :development
 gem "jquery-rails"
 
 gem 'dotenv-rails'
-gem 'omniauth'
+
 gem 'omniauth-facebook'
 gem 'omniauth-github', '~> 2.0.0'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection', '~> 1.0'
+
