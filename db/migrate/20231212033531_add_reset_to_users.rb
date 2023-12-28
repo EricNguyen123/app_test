@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# add reser
 class AddResetToUsers < ActiveRecord::Migration[7.1]
   def change
     add_column :users, :reset_digest, :string

@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# model micropost
 class Micropost < ApplicationRecord
   belongs_to :user
   has_one_attached :image
@@ -10,18 +7,16 @@ class Micropost < ApplicationRecord
   validate :image_content_type
   validate :image_size
   def image_content_type
-    return unless image.attached? && !image.content_type.in?(%w[image/jpeg image/gif image/png])
-
-    errors.add(:image, 'must be a valid image format')
+    if image.attached? && !image.content_type.in?(%w[image/jpeg image/gif image/png])
+      errors.add(:image, "must be a valid image format")
+    end
   end
-
   def image_size
-    return unless image.attached? && image.blob.byte_size > 5.megabytes
-
-    errors.add(:image, 'should be less than 5MB')
+    if image.attached? && image.blob.byte_size > 5.megabytes
+      errors.add(:image, "should be less than 5MB")
+    end
   end
-
-  def display_image
+  def display_image 
     image.variant(resize_to_limit: [500, 500]).processed
   end
 end
