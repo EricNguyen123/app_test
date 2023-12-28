@@ -79,4 +79,29 @@ RSpec.describe SessionsController, type: :controller do
     get :omniauth
     expect(response).to redirect_to(root_url)
   end
+
+  describe 'POST #create' do
+    it 'redirects to root_url with warning when account is not activated' do
+      user = FactoryBot.create(:user, activated: false)
+      post :create, params: { session: { email: user.email, password: user.password } }
+      expect(response).to redirect_to(root_url)
+      expect(flash[:warning]).to be_present
+    end
+
+    it 'renders new template with danger flash message on invalid credentials' do
+      user = FactoryBot.create(:user) # Ensure user exists
+      post :create, params: { session: { email: user.email, password: 'invalid_password' } }
+      expect(response).to render_template(:new)
+      expect(flash[:danger]).to be_present
+    end
+  end
+
+  describe 'GET #omniauth' do
+    it 'redirects to login_path on invalid third-party login' do
+      # Stub a third-party login that is invalid or fails
+      allow_any_instance_of(User).to receive(:login_with_third_party).and_return(User.new)
+      get :omniauth
+      expect(response).to redirect_to(login_path)
+    end
+  end
 end

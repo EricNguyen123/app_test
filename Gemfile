@@ -102,6 +102,7 @@ group :test do
   gem 'rails-controller-testing', '1.0.5'
   gem 'selenium-webdriver',       '4.2.0'
   gem 'webdrivers',               '5.0.0'
+  gem 'simplecov', require: false
 end
 
 group :production do
