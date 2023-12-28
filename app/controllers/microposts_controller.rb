@@ -5,7 +5,12 @@ class MicropostsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: :destroy
   def create
-    @micropost = current_user.microposts.build(micropost_params)
+    if params[:micropost][:micropost_id]
+      micropost = Micropost.find_by(id: params[:micropost][:micropost_id])
+      @micropost = micropost.microposts.build(micropost_params)
+    else
+      @micropost = current_user.microposts.build(micropost_params)
+    end
     @micropost.image.attach(params[:micropost][:image])
     if @micropost.save
       flash[:success] = 'Micropost created!'
@@ -17,7 +22,13 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-    @micropost.destroy
+    delete_micropost = Micropost.find_by(micropost_id: @micropost.id)
+    until delete_micropost.nil?
+      commented = delete_micropost
+      delete_micropost.destroy!
+      delete_micropost = Micropost.find_by(micropost_id: commented.id) || Micropost.find_by(micropost_id: @micropost.id)
+    end
+    @micropost.destroy!
     flash[:success] = 'Micropost deleted'
     redirect_to request.referrer || root_url
   end

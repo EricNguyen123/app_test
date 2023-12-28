@@ -1,9 +1,11 @@
-<%= form_with(model: @micropost, local: true) do |f| %> 
+<%= form_with(model: [micropost, comment], local: true) do |f| %> 
     <%= render 'shared/error_messages', object: f.object %> 
     <div class="field">
-        <%= f.text_area :content, placeholder: "Compose new micropost...", class: "box-input" %> 
+        <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt" %> 
     </div>
-    <%= f.submit "Post", class: "btn btn-primary" %> 
+    <%= f.hidden_field :micropost_id, value: micropost.id%>
+    <%= f.hidden_field :user_id, value: current_user.id%>
+    <%= f.submit "Comment", class: "btn btn-primary btn-cmt" %> 
     <span class="image">
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
     </span>
