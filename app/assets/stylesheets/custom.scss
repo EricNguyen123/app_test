@@ -329,7 +329,7 @@ img {
     border-style: none;
 }
 
-.signin_button {
+.signin-button {
     --height: 44px;
     background-color: $color-white;
     border: 2px solid #dce0e3;
@@ -344,7 +344,7 @@ img {
     margin-bottom: 10px;
 }
 
-.signin_button_icon {
+.signin-button-icon {
     left: 16px;
     position: absolute;
     top: 50%;
@@ -352,7 +352,7 @@ img {
     transform: translateY(-50%);
 }
 
-.signin_button_title {
+.signin-button-title {
     color: #35414c;
     cursor: pointer;
     font-size: 1.4rem;
@@ -362,11 +362,11 @@ img {
     text-align: center;
 }
 
-.link_login {
+.link-login {
     margin-bottom: 10px;
 }
 
-.login_with_third_party {
+.login-with-third-party {
     display: flex;
     flex-direction: column;
     align-items: center;
