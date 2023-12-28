@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Model User
+# user
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
@@ -85,11 +85,10 @@ class User < ApplicationRecord
   end
 
   def login_with_third_party(req_evn)
-    User.find_or_create_by(uid: req_evn.dig('omniauth.auth', 'uid'),
-                           provider: req_evn.dig('omniauth.auth', 'provider')) do |user|
-      user.name = req_evn.dig('omniauth.auth', 'info',
-                              'name') || req_evn.dig('omniauth.auth', 'info', 'nickname')
-      user.email = req_evn.dig('omniauth.auth', 'info', 'email') || "#{user.name}@gmail.com"
+    User.find_or_create_by(uid: req_evn&.dig('omniauth.auth', 'uid'),
+                           provider: req_evn&.dig('omniauth.auth', 'provider')) do |user|
+      user.name = req_evn&.dig('omniauth.auth', 'info', 'name') || req_evn&.dig('omniauth.auth', 'info', 'nickname')
+      user.email = req_evn&.dig('omniauth.auth', 'info', 'email') || "#{user.name}@gmail.com"
       user.password = SecureRandom.urlsafe_base64
     end
   end

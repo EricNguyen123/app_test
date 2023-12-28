@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 # frozen_string_literal: true
 
->>>>>>> 41387c5 (ref #1 DEV: fix rubocop)
 require 'test_helper'
 
 class UsersLoginTest < ActionDispatch::IntegrationTest

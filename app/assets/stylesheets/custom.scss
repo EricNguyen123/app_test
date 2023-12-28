@@ -6,6 +6,7 @@ $gray-medium-light: #eaeaea;
 $state-danger-text: #1a1a1a;
 $gray-lighter: #b2b2b2;
 $gray-light: #837b7b;
+$color-white: #fff;
 
 @mixin box_sizing { 
     -moz-box-sizing: border-box; 
@@ -13,19 +14,22 @@ $gray-light: #837b7b;
     box-sizing: border-box;
 }
 
-
 body {
     padding-top: 60px;
 }
+
 section { 
     overflow: auto;
 }
+
 textarea {
     resize: vertical;
 }
+
 .center {
     text-align: center;
 }
+
 .center h1 { 
     margin-bottom: 10px;
 }
@@ -33,12 +37,14 @@ textarea {
 h1, h2, h3, h4, h5, h6 { 
     line-height: 1;
 }
+
 h1 {
     font-size: 3em; 
     letter-spacing: -2px; 
     margin-bottom: 30px; 
     text-align: center;
 }
+
 h2 {
     font-size: 1.2em; 
     letter-spacing: -1px; 
@@ -47,11 +53,11 @@ h2 {
     font-weight: normal; 
     color: #777;
 }
+
 p{
     font-size: 1.1em; 
     line-height: 1.7em;
 }
-
 
 #logo {
     float: left;
@@ -148,7 +154,6 @@ footer ul li {
     margin-top: 45px;
     @include box_sizing; 
 }
-
 
 aside { 
     section.user_info {
@@ -282,7 +287,6 @@ span.image {
     }
 }
   
-
 .stats { 
     overflow: auto; 
     margin-top: 0; 
@@ -320,14 +324,14 @@ span.image {
 .users .follow { 
     padding: 0;
 }
-        
+
 img {
     border-style: none;
 }
 
-.SigninButton {
+.signin-button {
     --height: 44px;
-    background-color: #fff;
+    background-color: $color-white;
     border: 2px solid #dce0e3;
     border-radius: 44px;
     display: inline-block;
@@ -340,7 +344,7 @@ img {
     margin-bottom: 10px;
 }
 
-.SigninButton_icon {
+.signin-button-icon {
     left: 16px;
     position: absolute;
     top: 50%;
@@ -348,7 +352,7 @@ img {
     transform: translateY(-50%);
 }
 
-.SigninButton_title {
+.signin-button-title {
     color: #35414c;
     cursor: pointer;
     font-size: 1.4rem;
@@ -358,7 +362,7 @@ img {
     text-align: center;
 }
 
-.link_login {
+.link-login {
     margin-bottom: 10px;
 }
 

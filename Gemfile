@@ -1,4 +1,6 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
@@ -99,7 +101,8 @@ group :test do
   gem 'minitest-reporters',       '1.5.0'
   gem 'rails-controller-testing', '1.0.5'
   gem 'selenium-webdriver',       '4.2.0'
-  gem 'webdrivers',               '5.0.0'
+  gem 'simplecov', require: false
+  gem 'webdrivers', '5.0.0'
 end
 
 group :production do
@@ -116,8 +119,7 @@ gem 'pry-rails', group: :development
 gem 'jquery-rails'
 
 gem 'dotenv-rails'
-gem 'omniauth'
+
 gem 'omniauth-facebook'
 gem 'omniauth-github', '~> 2.0.0'
 gem 'omniauth-google-oauth2'
-

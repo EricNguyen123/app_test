@@ -28,11 +28,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'email should not be too long' do
-<<<<<<< HEAD
-    @user.email = 'a' * 244 + '@example.com'
-=======
     @user.email = "#{'a' * 244}@example.com"
->>>>>>> 41387c5 (ref #1 DEV: fix rubocop)
     assert_not @user.valid?
   end
 

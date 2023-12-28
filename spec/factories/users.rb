@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'faker'
-
 FactoryBot.define do
   factory :user do
     uid { Faker::Number.number(digits: 6) }
