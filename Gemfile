@@ -101,6 +101,7 @@ group :test do
   gem "minitest-reporters",       "1.5.0"
   gem "guard",                    "2.18.0"
   gem "guard-minitest",           "2.4.6"
+  gem 'simplecov', require: false
 end
 
 group :production do
@@ -122,4 +123,3 @@ gem 'dotenv-rails'
 gem 'omniauth-facebook'
 gem 'omniauth-github', '~> 2.0.0'
 gem 'omniauth-google-oauth2'
-

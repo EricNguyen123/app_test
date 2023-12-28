@@ -25,6 +25,9 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   it 'login with third party' do
+    user = FactoryBot.create(:user) # Tạo người dùng
+    allow(User).to receive(:new).and_return(user)
+    allow(user).to receive(:login_with_third_party).and_return(user)
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
                                                                          'provider' => 'google_oauth2',
@@ -76,5 +79,30 @@ RSpec.describe SessionsController, type: :controller do
     request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
     get :omniauth
     expect(response).to redirect_to(root_url)
+  end
+
+  describe 'POST #create' do
+    it 'redirects to root_url with warning when account is not activated' do
+      user = FactoryBot.create(:user, activated: false)
+      post :create, params: { session: { email: user.email, password: user.password } }
+      expect(response).to redirect_to(root_url)
+      expect(flash[:warning]).to be_present
+    end
+
+    it 'renders new template with danger flash message on invalid credentials' do
+      user = FactoryBot.create(:user) # Ensure user exists
+      post :create, params: { session: { email: user.email, password: 'invalid_password' } }
+      expect(response).to render_template(:new)
+      expect(flash[:danger]).to be_present
+    end
+  end
+
+  describe 'GET #omniauth' do
+    it 'redirects to login_path on invalid third-party login' do
+      # Stub a third-party login that is invalid or fails
+      allow_any_instance_of(User).to receive(:login_with_third_party).and_return(User.new)
+      get :omniauth
+      expect(response).to redirect_to(login_path)
+    end
   end
 end
