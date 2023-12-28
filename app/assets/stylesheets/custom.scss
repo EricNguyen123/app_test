@@ -6,6 +6,7 @@ $gray-medium-light: #eaeaea;
 $state-danger-text: #1a1a1a;
 $gray-lighter: #b2b2b2;
 $gray-light: #837b7b;
+$color-white: #fff;
 
 @mixin box_sizing { 
     -moz-box-sizing: border-box; 
@@ -328,9 +329,9 @@ img {
     border-style: none;
 }
 
-.SigninButton {
+.signin-button {
     --height: 44px;
-    background-color: #fff;
+    background-color: $color-white;
     border: 2px solid #dce0e3;
     border-radius: 44px;
     display: inline-block;
@@ -343,7 +344,7 @@ img {
     margin-bottom: 10px;
 }
 
-.SigninButton_icon {
+.signin-button_icon {
     left: 16px;
     position: absolute;
     top: 50%;
@@ -351,7 +352,7 @@ img {
     transform: translateY(-50%);
 }
 
-.SigninButton_title {
+.signin-button_title {
     color: #35414c;
     cursor: pointer;
     font-size: 1.4rem;

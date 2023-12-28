@@ -1,8 +1,8 @@
 <% @items.each do |item|%>
     <a href="<%=item[:links]%>" class="link_login">
-        <div class="SigninButton">
-            <img class="SigninButton_icon" src="/assets/<%= item[:image] %>" alt="Đăng nhập với google">
-            <span class="SigninButton_title">Đăng nhập với <%= item[:name] %> </span>
+        <div class="signin-button">
+            <img class="signin-button_icon" src="/assets/<%= item[:image] %>" alt="Sign in with">
+            <span class="signin-button_title">Sign in with <%= item[:name] %> </span>
         </div>
     </a>
 <%end%>
