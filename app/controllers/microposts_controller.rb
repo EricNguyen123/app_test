@@ -22,18 +22,23 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-    delete_micropost = Micropost.find_by(micropost_id: @micropost.id)
-    until delete_micropost.nil?
-      commented = delete_micropost
-      delete_micropost.destroy!
-      delete_micropost = Micropost.find_by(micropost_id: commented.id) || Micropost.find_by(micropost_id: @micropost.id)
-    end
+    delete_cmt(@micropost.id)
     @micropost.destroy!
     flash[:success] = 'Micropost deleted'
     redirect_to request.referrer || root_url
   end
 
   private
+
+  def delete_cmt(cmt_id)
+    until Micropost.find_by(id: cmt_id).nil?
+      if !Micropost.find_by(micropost_id: cmt_id).nil?
+        delete_cmt(Micropost.find_by(micropost_id: cmt_id).id)
+      else
+        Micropost.find_by(id: cmt_id).destroy!
+      end
+    end
+  end
 
   def micropost_params
     params.require(:micropost).permit(:content, :image, :micropost_id, :user_id)
