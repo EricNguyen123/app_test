@@ -7,10 +7,10 @@ class MicropostsController < ApplicationController
   def create
     if params[:micropost][:micropost_id]
       micropost = Micropost.find_by(id: params[:micropost][:micropost_id])
-      @micropost = micropost.microposts.build(micropost_params) 
+      @micropost = micropost.microposts.build(micropost_params)
     else
       @micropost = current_user.microposts.build(micropost_params)
-    end 
+    end
     @micropost.image.attach(params[:micropost][:image])
     if @micropost.save
       flash[:success] = 'Micropost created!'
@@ -22,11 +22,11 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-    deleteMicropost = Micropost.find_by(micropost_id: @micropost.id)
-    while !deleteMicropost.nil? do
-      commented = deleteMicropost
-      deleteMicropost.destroy!
-      deleteMicropost = Micropost.find_by(micropost_id: commented.id) || Micropost.find_by(micropost_id: @micropost.id)
+    delete_micropost = Micropost.find_by(micropost_id: @micropost.id)
+    until delete_micropost.nil?
+      commented = delete_micropost
+      delete_micropost.destroy!
+      delete_micropost = Micropost.find_by(micropost_id: commented.id) || Micropost.find_by(micropost_id: @micropost.id)
     end
     @micropost.destroy!
     flash[:success] = 'Micropost deleted'

@@ -1,7 +1,7 @@
 <%= form_with(model: [micropost, comment], local: true) do |f| %> 
     <%= render 'shared/error_messages', object: f.object %> 
     <div class="field">
-        <%= f.text_area :content, placeholder: "Comment..." %> 
+        <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt" %> 
     </div>
     <%= f.hidden_field :micropost_id, value: micropost.id%>
     <%= f.hidden_field :user_id, value: current_user.id%>
