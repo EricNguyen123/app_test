@@ -38,4 +38,4 @@
 /app/assets/builds
 /.env
 
-echo coverage >> .gitignorev
+/coverage
