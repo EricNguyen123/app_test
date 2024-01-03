@@ -25,7 +25,7 @@ class User < ApplicationRecord
         end
 
         def login_with_third_party(req_evn)
-          user = self.find_or_create_by(uid: req_evn&.dig('omniauth.auth', 'uid'),
+          find_or_create_by(uid: req_evn&.dig('omniauth.auth', 'uid'),
                                     provider: req_evn&.dig('omniauth.auth', 'provider')) do |user|
               user.name = req_evn&.dig('omniauth.auth', 'info', 'name') || req_evn&.dig('omniauth.auth', 'info', 'nickname') 
               user.email = req_evn&.dig('omniauth.auth', 'info', 'email') || "#{user.name}@gmail.com"
