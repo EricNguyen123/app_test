@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
       { links: '/auth/facebook', name: 'Facebook', image: 'facebook-18px.svg' },
       { links: '/auth/github', name: 'Github', image: 'github-18px.svg' }
     ]
-    
   end
 
   def create 

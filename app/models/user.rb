@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     attr_accessor :remember_token, :activation_token, :reset_token 
+    
     before_save :downcase_email
     before_create :create_activation_digest
     has_many :microposts, dependent: :destroy
@@ -30,7 +31,7 @@ class User < ApplicationRecord
               user.email = req_evn&.dig('omniauth.auth', 'info', 'email') || "#{user.name}@gmail.com"
               user.password = SecureRandom.urlsafe_base64
           end
-      end
+        end
     end 
 
     def remember
