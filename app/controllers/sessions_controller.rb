@@ -36,7 +36,8 @@ class SessionsController < ApplicationController
   end
 
   def omniauth
-    user = User.new.login_with_third_party(request.env)
+    user = User.login_with_third_party(request.env)
+    user = User.find_by(email: user.email) unless user.valid?
     if user.valid?
       user.activate unless user.activated?
       log_in user
