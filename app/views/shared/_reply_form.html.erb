@@ -1,22 +1,48 @@
-<%= form_with(model: [micropost, comment], local: true) do |f| %> 
+<%= form_with(model: [micropost, comment], local: true, html: { class: "form-post", remote: true }) do |f| %> 
     <%= render 'shared/error_messages', object: f.object %> 
     <div class="field">
         <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt" %> 
     </div>
-    <%= f.hidden_field :micropost_id, value: micropost.id%>
-    <%= f.hidden_field :user_id, value: current_user.id%>
-    <%= f.submit "Comment", class: "btn btn-primary btn-cmt" %> 
+    <%= f.hidden_field :micropost_id, value: micropost.id, class: "micropost-id-cmt" %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit "Comment", class: "btn btn-primary btn-cmt btn-cmt-#{micropost.id}", data: {btn_id: micropost.id} %> 
     <span class="image">
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
     </span>
 <% end %>
 
 <script type="text/javascript"> 
-    $("#micropost_image").bind("change", function() {
-        const size_in_megabytes = this.files[0].size/1024/1024; 
-        if (size_in_megabytes > 5) {
-            alert("Maximum file size is 5MB. Please choose a smaller file.");
-            $("#micropost_image").val("");
-        }
-    }); 
+      $("#micropost_image").bind("change", function() {
+          const size_in_megabytes = this.files[0].size/1024/1024; 
+          if (size_in_megabytes > 5) {
+              alert("Maximum file size is 5MB. Please choose a smaller file.");
+              $("#micropost_image").val("");
+          }
+      }); 
+      var check_cmt = $('.micropost-id-cmt').val();
+      
+      $(".form-post").on("submit", function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+          type: 'POST',
+          url: $(this).attr('action'),
+          data: formData,
+          processData: false,
+          contentType: false,
+          dataType: 'json',
+          success: function(response) {
+            if (response.success) {
+              var res = response.micropost.micropost_id;
+              $('.reply-comment-micropost_' + res).html(response.html_content)
+              $('.box-input-cmt').val('');
+            } else {
+              alert('Error: ' + response.errors.join(', '));
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error(status + ': ' + error);
+          }
+        });
+      });
 </script>

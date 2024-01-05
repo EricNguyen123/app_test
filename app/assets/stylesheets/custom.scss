@@ -10,7 +10,7 @@ $color-white: #fff;
 
 @mixin box_sizing { 
     -moz-box-sizing: border-box; 
-    -webkit-box-sizing: border-box; 
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -410,10 +410,8 @@ img {
             justify-content: flex-end;
             padding-right: 15px;
             padding-bottom: 5px;
-            .delete-comment{
-                margin-left: 10px;
-            }
             .btn-content {
+                margin-right: 10px;
                 color: #4376a6;
                 &:hover {
                     cursor: pointer;
@@ -429,7 +427,7 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    .reply-comment {
+    .reply-comment, .edit-comment {
         width: 92%;
         display: flex;
         flex-direction: column;
@@ -444,7 +442,7 @@ img {
     }
 }
 
-.box-reply {
+.box-reply, .box-edit {
     display: none;
 }
 

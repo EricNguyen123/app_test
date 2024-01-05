@@ -14,7 +14,12 @@ class MicropostsController < ApplicationController
     @micropost.image.attach(params[:micropost][:image])
     if @micropost.save
       flash[:success] = 'Micropost created!'
-      redirect_to root_url
+      redirect_to root_url unless params[:micropost][:micropost_id]
+      if params[:micropost][:micropost_id]
+        micropost = Micropost.find_by(id: @micropost.micropost_id)
+        html_content = render_to_string(:partial => 'shared/reply', :locals => { :micropost => micropost }).squish
+        render json: { success: true, micropost: @micropost, html_content: html_content } 
+      end
     else
       @feed_items = current_user.feed.where(micropost_id: nil).paginate(page: params[:page])
       render 'static_pages/home'
@@ -22,26 +27,25 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-    delete_cmt(@micropost.id)
     @micropost.destroy!
     flash[:success] = 'Micropost deleted'
     redirect_to request.referrer || root_url
   end
 
-  private
-
-  def delete_cmt(cmt_id)
-    until Micropost.find_by(id: cmt_id).nil?
-      if !Micropost.find_by(micropost_id: cmt_id).nil?
-        delete_cmt(Micropost.find_by(micropost_id: cmt_id).id)
-      else
-        Micropost.find_by(id: cmt_id).destroy!
-      end
+  def update
+    if params[:micropost][:id]
+      micropost = Micropost.find_by(id: params[:micropost][:id])
+      @micropost = micropost.update(micropost_params)
+      @micropost.image.attach(params[:micropost][:image]) if params[:micropost][:image]
+      flash[:success] = 'Micropost updated!'
+      redirect_to root_url
     end
   end
 
+  private
+
   def micropost_params
-    params.require(:micropost).permit(:content, :image, :micropost_id, :user_id)
+    params.require(:micropost).permit(:id, :content, :image, :micropost_id, :user_id)
   end
 
   def correct_user
