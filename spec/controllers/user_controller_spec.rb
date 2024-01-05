@@ -93,14 +93,17 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     it 'when omniauth.auth is nil' do
-      req_evn = { 'omniauth.auth' => { 'uid' => nil, 'provider' => nil, 'info' => { 'name' => 'John', 'email' => 'john@example.com' } } }
+      req_evn = { 'omniauth.auth' => { 'uid' => nil, 'provider' => nil,
+                                       'info' => { 'name' => 'John', 'email' => 'john@example.com' } } }
       expect(User).to receive(:find_or_create_by).with(uid: nil, provider: nil).and_call_original
       User.login_with_third_party(req_evn)
     end
 
     it 'redirects to login_path when omniauth.auth is nil' do
-      user = instance_double(User, id: nil, name: 'John', email: 'john@example.com', provider: 'google_oauth2', uid: '123')
-      req_evn = { 'omniauth.auth' => { 'uid' => '123', 'provider' => 'google', 'info' => { 'name' => 'John', 'email' => 'john@example.com' } } }
+      user = instance_double(User, id: nil, name: 'John', email: 'john@example.com', provider: 'google_oauth2',
+                                   uid: '123')
+      req_evn = { 'omniauth.auth' => { 'uid' => '123', 'provider' => 'google',
+                                       'info' => { 'name' => 'John', 'email' => 'john@example.com' } } }
       User.login_with_third_party(req_evn)
       allow(User).to receive(:find_or_create_by).and_return(user)
       allow(user).to receive(:valid?).and_return(false)
