@@ -1,11 +1,11 @@
-<%= form_with(model: [micropost, comment], local: true, html: { class: "form-post", remote: true }) do |f| %> 
+<%= form_with(model: [micropost, comment], local: true, html: { class: "form-post", id: "form-post-#{micropost.id}", remote: true }) do |f| %> 
     <%= render 'shared/error_messages', object: f.object %> 
     <div class="field">
-        <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt" %> 
+        <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt", id: "#{micropost.id}" %> 
     </div>
     <%= f.hidden_field :micropost_id, value: micropost.id, class: "micropost-id-cmt" %>
     <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.submit "Comment", class: "btn btn-primary btn-cmt btn-cmt-#{micropost.id}", data: {btn_id: micropost.id} %> 
+    <%= f.submit "Comment", class: "btn btn-primary btn-cmt btn-cmt-#{micropost.id}" %> 
     <span class="image">
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
     </span>
@@ -19,30 +19,36 @@
               $("#micropost_image").val("");
           }
       }); 
-      var check_cmt = $('.micropost-id-cmt').val();
-      
-      $(".form-post").on("submit", function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-          type: 'POST',
-          url: $(this).attr('action'),
-          data: formData,
-          processData: false,
-          contentType: false,
-          dataType: 'json',
-          success: function(response) {
-            if (response.success) {
-              var res = response.micropost.micropost_id;
-              $('.reply-comment-micropost_' + res).html(response.html_content)
-              $('.box-input-cmt').val('');
-            } else {
-              alert('Error: ' + response.errors.join(', '));
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error(status + ': ' + error);
-          }
+        $('#form-post-<%= j micropost.id %>').on("submit", function(e) {
+          e.preventDefault();
+          var formData = new FormData(this);
+          $.ajax({
+              type: 'POST',
+              url: $(this).attr('action'),
+              data: formData,
+              processData: false,
+              contentType: false,
+              dataType: 'json',
+              success: function(response) {
+                if (response.success) {
+                  var res = response.micropost.micropost_id;
+                  var res_input = response.micropost.id;
+                  if ($('.reply-comment-micropost_' + res).length <= 0) {
+                    $('.reply-list-micropost_<%= j micropost.id %>').prepend('<div class="reply-comment reply-comment-micropost_<%= j micropost.id %>"></div>');
+                  }
+                  $('.reply-comment-micropost_' + res).html(response.html_content);
+                  $('#' + res_input).val("");
+                  $('#<%= j micropost.id %>').val("");
+                  window.location.reload();
+                } else {
+                  alert('Error: ' + response.errors.join(', '));
+                }
+              },
+              error: function(xhr, status, error) {
+                console.error(status + ': ' + error);
+              }
+          });
+          
         });
-      });
+      
 </script>

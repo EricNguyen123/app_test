@@ -7,6 +7,11 @@ $state-danger-text: #1a1a1a;
 $gray-lighter: #b2b2b2;
 $gray-light: #837b7b;
 $color-white: #fff;
+$color-bg-cmt: #f9f9f9;
+$color-btn-option-cmt: #4376a6;
+$color-box-bg: #bbb;
+$color-btn-sign: #35414c;
+$color-btn-sign-bg: #dce0e3;
 
 @mixin box_sizing { 
     -moz-box-sizing: border-box; 
@@ -188,7 +193,7 @@ aside {
 
 /* forms */
 input, textarea, select, .uneditable-input { 
-    border: 1px solid #bbb;
+    border: 1px solid $color-box-bg;
     width: 100%;
     margin-bottom: 15px;
     @include box_sizing; 
@@ -329,7 +334,7 @@ img {
 .signin-button {
     --height: 44px;
     background-color: $color-white;
-    border: 2px solid #dce0e3;
+    border: 2px solid $color-btn-sign-bg;
     border-radius: 44px;
     display: inline-block;
     height: var(--height);
@@ -350,7 +355,7 @@ img {
 }
 
 .signin-button-title {
-    color: #35414c;
+    color: $color-btn-sign;
     cursor: pointer;
     font-size: 1.4rem;
     font-weight: 600;
@@ -379,7 +384,7 @@ img {
 
 .item-comment {
     width: 100%;
-    background-color: #f9f9f9;
+    background-color: $color-bg-cmt;
     border-radius: 8px;
     margin-bottom: 5px;
     .content-comment {
@@ -412,7 +417,7 @@ img {
             padding-bottom: 5px;
             .btn-content {
                 margin-right: 10px;
-                color: #4376a6;
+                color: $color-btn-option-cmt;
                 &:hover {
                     cursor: pointer;
                     text-decoration: underline;
@@ -434,7 +439,7 @@ img {
         justify-content: flex-end;
         margin-left: 8%;
         padding-left: 5px;
-        border-left: solid 1px #bbb;
+        border-left: solid 1px $color-box-bg;
         border-radius: 8px;
     }
     .btn-cmt {
@@ -443,7 +448,7 @@ img {
 }
 
 .box-reply, .box-edit {
-    display: none;
+    display: none !important;
 }
 
 .box-rep-form {

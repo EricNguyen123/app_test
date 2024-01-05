@@ -17,11 +17,11 @@
                     Comment <%= time_ago_in_words(comment.created_at) %> ago.
                 </span> 
                 <div class="box-btn-option">
-                    <div class="btn-reply btn-reply-<%= dom_id comment %>">
+                    <div class="btn-reply btn-reply-<%= dom_id comment %>" id="<%= dom_id comment %>">
                         <span class="btn-content">Reply</span>
                     </div>
                     <% if current_user?(User.find_by(id: comment.user_id))%>
-                        <div class="btn-edit btn-edit-<%= dom_id comment %>">
+                        <div class="btn-edit btn-edit-<%= dom_id comment %>" id="<%= dom_id comment %>">
                             <span class="btn-content">Edit</span>
                         </div>
                         <div class="delete-comment">
@@ -31,9 +31,9 @@
                 </div>
             </div>
         </div>
-        <div class="reply-list">
+        <div class="reply-list reply-list-<%= dom_id comment %>">
             <% if Micropost.find_by(micropost_id: comment.id)%>
-                <div class="reply-comment reply-comment-<%= dom_id comment %>">
+                <div class="reply-comment reply-comment-<%= dom_id comment %>" id="reply-comment-<%= dom_id comment %>">
                     <%= render "shared/reply", micropost: comment%>
                 </div>
             <%end%>
@@ -46,21 +46,23 @@
         </div>
         <script type="text/javascript"> 
             $('.btn-reply-<%=j dom_id(comment) %>').on("click", ()=>{
-                $('.box-rep-cmt').addClass('box-reply')
-                $('.box-edit-cmt').addClass('box-edit')
-                $('.box-reply-<%=j dom_id(comment) %>').removeClass('box-reply')
+                $('.box-rep-cmt').addClass('box-reply');
+                $('.box-edit-cmt').addClass('box-edit');
+                $('.box-reply-<%=j dom_id(comment) %>').removeClass('box-reply');
                 $('.box-reply-<%=j dom_id(comment) %>').css({
                     display: 'flex !important'
-                })
-            })
+                });
+                console.log('<%= j comment.id %>');
+                $('#<%= j comment.id %>').val("");
+            });
 
             $('.btn-edit-<%=j dom_id(comment) %>').on("click", ()=>{
-                $('.box-edit-cmt').addClass('box-edit')
-                $('.box-rep-cmt').addClass('box-reply')
-                $('.box-edit-<%=j dom_id(comment) %>').removeClass('box-edit')
+                $('.box-edit-cmt').addClass('box-edit');
+                $('.box-rep-cmt').addClass('box-reply');
+                $('.box-edit-<%=j dom_id(comment) %>').removeClass('box-edit');
                 $('.box-edit-<%=j dom_id(comment) %>').css({
                     display: 'flex !important'
-                })
+                });
             })
         </script>
     </div>

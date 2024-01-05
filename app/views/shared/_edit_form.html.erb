@@ -1,11 +1,11 @@
-<%= form_with(model: [micropost, comment], url: micropost_path(micropost), method: :patch, local: true) do |f| %> 
+<%= form_with(model: [micropost, comment], url: micropost_path(micropost), method: :patch, local: true, html: { class: "form-post", id: "form-post-#{micropost.id}", remote: true }) do |f| %> 
   <%= render 'shared/error_messages', object: f.object %> 
   <div class="field">
-      <%= f.text_field :content, value: micropost.content, class: "box-input box-input-cmt" %> 
+      <%= f.text_field :content, value: micropost.content, class: "box-input box-input-cmt", id: "#{micropost.id}" %> 
   </div>
-  <%= f.hidden_field :id, value: micropost.id%>
+  <%= f.hidden_field :id, value: micropost.id, class: "micropost-id-cmt" %>
   <%= f.hidden_field :user_id, value: current_user.id%>
-  <%= f.submit "Comment", class: "btn btn-primary btn-cmt" %> 
+  <%= f.submit "Comment", class: "btn btn-primary btn-cmt btn-cmt-#{micropost.id}" %> 
   <span class="image">
       <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
   </span>
