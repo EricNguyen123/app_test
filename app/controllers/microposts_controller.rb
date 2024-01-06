@@ -41,8 +41,10 @@ class MicropostsController < ApplicationController
   private
 
   def handle_micropost_save
+    return if params[:micropost][:micropost_id]
+
     flash[:success] = 'Micropost created!'
-    redirect_to root_url unless params[:micropost][:micropost_id]
+    redirect_to root_url
   end
 
   def handle_comment_save(micropost)
