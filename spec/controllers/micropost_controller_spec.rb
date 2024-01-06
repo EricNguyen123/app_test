@@ -47,7 +47,23 @@ RSpec.describe MicropostsController, type: :controller do
         end.to change(Micropost, :count).by(0)
       end
 
-      # Add more tests for other scenarios as needed
+      it 'does not save comment if micropost_id is not provided' do
+        micropost_params = { micropost: { content: micropost.content } }
+        post :create, params: micropost_params
+        expect(response).to redirect_to(root_url)
+      end
+    end
+  end
+
+  describe 'UPDATE #update' do
+    before { log_in user }
+    it 'updates the micropost and redirects to root_url' do
+      allow(Micropost).to receive(:find_by).and_return(micropost)
+      patch :update, params: { micropost_id: micropost.micropost_id, id: micropost.id, micropost: { id: micropost.id, content: micropost.content, user_id: user.id } }
+
+      expect(micropost.reload.content).to eq(micropost.content)
+      expect(flash[:success]).to eq('Micropost updated!')
+      expect(response).to redirect_to(root_url)
     end
   end
 
