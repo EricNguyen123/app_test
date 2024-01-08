@@ -79,7 +79,7 @@ RSpec.describe MicropostsController, type: :controller do
       end
 
       it 'deletes the micropost and associated comments when a micropost is deleted' do
-        comment = micropost.microposts.create( micropost_id: micropost.id, user_id: user.id )
+        comment = micropost.microposts.create(micropost_id: micropost.id, user_id: user.id)
         delete :destroy, params: { id: micropost.id }
         expect(response).to redirect_to(root_url)
         expect(flash[:success]).to eq('Micropost deleted')
