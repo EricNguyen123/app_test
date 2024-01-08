@@ -77,6 +77,14 @@ RSpec.describe MicropostsController, type: :controller do
         comment = Micropost.find_by(id: micropost.id)
         expect(comment).to eq(nil)
       end
+
+      it 'deletes the micropost with comment or comment with comment' do
+        delete :destroy, params: { id: micropost.id }
+        expect(response).to redirect_to(root_url)
+        expect(flash[:success]).to eq('Micropost deleted')
+        comment = Micropost.find_by(micropost_id: micropost.id)
+        expect(comment).to eq(nil)
+      end
     end
 
     context 'when micropost does not exist' do
