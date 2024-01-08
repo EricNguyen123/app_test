@@ -78,12 +78,13 @@ RSpec.describe MicropostsController, type: :controller do
         expect(comment).to eq(nil)
       end
 
-      it 'deletes the micropost with comment or comment with comment' do
+      it 'deletes the micropost and associated comments when a micropost is deleted' do
+        comment = micropost.microposts.create( micropost_id: micropost.id, user_id: user.id )
         delete :destroy, params: { id: micropost.id }
         expect(response).to redirect_to(root_url)
         expect(flash[:success]).to eq('Micropost deleted')
-        comment = Micropost.find_by(micropost_id: micropost.id)
-        expect(comment).to eq(nil)
+        orphan_comment = Micropost.find_by(id: comment.id)
+        expect(orphan_comment).to eq(nil)
       end
     end
 
