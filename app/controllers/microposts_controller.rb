@@ -32,14 +32,12 @@ class MicropostsController < ApplicationController
     return unless params[:micropost][:id]
 
     micropost = Micropost.find_by(id: params[:micropost][:id])
-    if micropost.update(micropost_params)
-      @micropost = micropost
-      @micropost.image.attach(params[:micropost][:image]) if params[:micropost][:image]
-      # flash[:success] = 'Micropost updated!'
-      # redirect_to root_url
-      html_content = render_to_string(partial: 'shared/edit', locals: { comment: micropost }).squish
-      render json: { success: true, micropost:, html_content: }
-    end
+    return unless micropost.update(micropost_params)
+
+    @micropost = micropost
+    @micropost.image.attach(params[:micropost][:image]) if params[:micropost][:image]
+    html_content = render_to_string(partial: 'shared/edit', locals: { comment: micropost }).squish
+    render json: { success: true, micropost:, html_content: }
   end
 
   private

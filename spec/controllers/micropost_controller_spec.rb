@@ -49,6 +49,14 @@ RSpec.describe MicropostsController, type: :controller do
         post :create, params: micropost_params
         expect(response).to redirect_to(root_url)
       end
+
+      it 'renders a successful response when micropost_id is present' do
+        allow_any_instance_of(ActionController::Base).to receive(:render_to_string).and_return('Your string here')
+        post :create, params: { micropost: { micropost_id: micropost.id, content: micropost.content, user_id: user.id } }, format: :json
+        expect(response).to be_successful
+        json_response = JSON.parse(response.body)
+        expect(json_response['success']).to eq(true)
+      end
     end
   end
 
@@ -59,8 +67,8 @@ RSpec.describe MicropostsController, type: :controller do
       patch :update, params: { micropost_id: micropost.micropost_id, id: micropost.id, micropost: { id: micropost.id, content: micropost.content, user_id: user.id } }
 
       expect(micropost.reload.content).to eq(micropost.content)
-      expect(flash[:success]).to eq('Micropost updated!')
-      expect(response).to redirect_to(root_url)
+      expect(response).to be_successful
+      expect(JSON.parse(response.body)['success']).to eq(true)
     end
   end
 
