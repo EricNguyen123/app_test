@@ -6,11 +6,11 @@ class Micropost < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
+  scope :without_micropost_id, -> { where(micropost_id: nil) }
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
   validate :image_content_type
   validate :image_size
-  validates :micropost_id, presence: false
   def image_content_type
     return unless image.attached? && !image.content_type.in?(%w[image/jpeg image/gif image/png])
 

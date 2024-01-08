@@ -17,7 +17,7 @@ class MicropostsController < ApplicationController
       handle_micropost_save
       handle_comment_save(@micropost)
     else
-      @feed_items = current_user.feed.where(micropost_id: nil).paginate(page: params[:page])
+      @feed_items = current_user.feed.without_micropost_id.paginate(page: params[:page])
       render 'static_pages/home'
     end
   end

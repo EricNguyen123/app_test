@@ -10,45 +10,5 @@
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
     </span>
 <% end %>
-
-<script type="text/javascript"> 
-      $("#micropost_image").bind("change", function() {
-          const size_in_megabytes = this.files[0].size/1024/1024; 
-          if (size_in_megabytes > 5) {
-              alert("Maximum file size is 5MB. Please choose a smaller file.");
-              $("#micropost_image").val("");
-          }
-      }); 
-        $('#form-post-<%= j micropost.id %>').on("submit", function(e) {
-          e.preventDefault();
-          var formData = new FormData(this);
-          $.ajax({
-              type: 'POST',
-              url: $(this).attr('action'),
-              data: formData,
-              processData: false,
-              contentType: false,
-              dataType: 'json',
-              success: function(response) {
-                if (response.success) {
-                  var res = response.micropost.micropost_id;
-                  var res_input = response.micropost.id;
-                  if ($('.reply-comment-micropost_' + res).length <= 0) {
-                    $('.reply-list-micropost_<%= j micropost.id %>').prepend('<div class="reply-comment reply-comment-micropost_<%= j micropost.id %>"></div>');
-                  }
-                  $('.reply-comment-micropost_' + res).html(response.html_content);
-                  $('#' + res_input).val("");
-                  $('#<%= j micropost.id %>').val("");
-                  window.location.reload();
-                } else {
-                  alert('Error: ' + response.errors.join(', '));
-                }
-              },
-              error: function(xhr, status, error) {
-                console.error(status + ': ' + error);
-              }
-          });
-          
-        });
-      
-</script>
+<%= javascript_include_tag "exception_img", "data-track-turbo": "true", defer: true %>
+<%= javascript_include_tag "form_post_reply", "data-track-turbo": "true", defer: true %>

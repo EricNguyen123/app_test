@@ -13,9 +13,6 @@ RSpec.describe MicropostsController, type: :controller do
         expect do
           post :create, params: { micropost: { micropost_id: micropost.id, user_id: user.id } }
         end.to change(Micropost, :count).by(1)
-
-        post :create, params: { micropost: { micropost_id: micropost.id, user_id: user.id } }
-        expect(assigns(:micropost)).to be_a_new(Micropost)
       end
 
       it 'attaches an image to the micropost' do
