@@ -1,17 +1,7 @@
 <% Micropost.where(micropost_id: micropost.id).reverse_each do |comment|%>
     <div class="blog-comment">
         <div class="item-comment" id="<%= dom_id comment %>">
-            <p class="content-comment">
-                <%= link_to gravatar_for(User.find_by(id: comment.user_id), size: 26), User.find_by(id: comment.user_id) %>
-                <strong class="user">
-                    <%= link_to User.find_by(id: comment.user_id).name, User.find_by(id: comment.user_id) %>
-                </strong>
-                <span class="time-comment"><%= comment.created_at.to_s[0...10]%></span>
-                <br>
-                <%= comment.content %>
-                <br>
-                <%= link_to image_tag(comment.display_image,  width: "100", class: "img-post"), comment.image if comment.image.attached?%>
-            </p>
+            <%= render "shared/edit", comment: comment %>
             <div class="footer-cmt">
                 <span class="timestamp">
                     Comment <%= time_ago_in_words(comment.created_at) %> ago.

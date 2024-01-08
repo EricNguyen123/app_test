@@ -4,7 +4,6 @@ $(document).on('turbo:load', function() {
     var parts = formPostId.split("-");
     var fID = parts[parts.length - 1];
     $('#' + formPostId).off("submit").on("submit", function(e) {
-      console.log('#' + formPostId)
       e.preventDefault();
       var formData = new FormData(this);
       $.ajax({
