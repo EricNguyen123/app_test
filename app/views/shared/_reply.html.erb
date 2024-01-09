@@ -1,0 +1,40 @@
+<% Micropost.where(micropost_id: micropost.id).reverse_each do |comment|%>
+    <div class="blog-comment">
+        <div class="item-comment" id="<%= dom_id comment %>">
+            <%= render "shared/edit", comment: comment %>
+            <div class="footer-cmt">
+                <span class="timestamp">
+                    Comment <%= time_ago_in_words(comment.created_at) %> ago.
+                </span> 
+                <div class="box-btn-option">
+                    <div class="btn-reply btn-reply-<%= dom_id comment %>" id="<%= dom_id comment %>">
+                        <span class="btn-content">Reply</span>
+                    </div>
+                    <% if current_user?(User.find_by(id: comment.user_id))%>
+                        <div class="btn-edit btn-edit-<%= dom_id comment %>" id="<%= dom_id comment %>">
+                            <span class="btn-content">Edit</span>
+                        </div>
+                        <div class="delete-comment">
+                            <%= link_to "Delete", comment, data: { turbo_method: :delete, confirm: "You sure?" }  %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="reply-list reply-list-<%= dom_id comment %>">
+            <% if Micropost.find_by(micropost_id: comment.id)%>
+                <div class="reply-comment reply-comment-<%= dom_id comment %>" id="reply-comment-<%= dom_id comment %>">
+                    <%= render "shared/reply", micropost: comment%>
+                </div>
+            <%end%>
+            <div class="box-reply box-reply-<%= dom_id comment %> box-rep-cmt box-rep-form">
+                <%= render 'shared/reply_form', micropost: comment, comment: @micropost %>
+            </div>
+            <div class="box-edit box-edit-<%= dom_id comment %> box-edit-cmt box-edit-form">
+                <%= render 'shared/edit_form', micropost: comment, comment: @micropost %>
+            </div>
+        </div>
+        <%= javascript_include_tag "reply", "data-track-turbo": "true", defer: true %>
+    </div>
+<%end%>
+
