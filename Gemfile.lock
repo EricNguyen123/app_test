@@ -385,6 +385,8 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    shoulda-matchers (6.0.0)
+      activesupport (>= 5.2.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -483,6 +485,7 @@ DEPENDENCIES
   rspec-rails
   sassc-rails
   selenium-webdriver (= 4.2.0)
+  shoulda-matchers (~> 6.0)
   simplecov
   spring
   spring-watcher-listen
