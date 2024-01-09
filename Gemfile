@@ -101,6 +101,7 @@ group :test do
   gem 'minitest-reporters',       '1.5.0'
   gem 'rails-controller-testing', '1.0.5'
   gem 'selenium-webdriver',       '4.2.0'
+  gem 'shoulda-matchers', '~> 6.0'
   gem 'simplecov', require: false
   gem 'webdrivers', '5.0.0'
 end

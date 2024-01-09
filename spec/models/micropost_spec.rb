@@ -6,24 +6,15 @@ RSpec.describe Micropost, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:micropost) { FactoryBot.create(:micropost, user:) }
 
-  it 'should be valid' do
-    expect(micropost.valid?).to be true
-  end
+  it { should belong_to(:user) }
 
-  it 'user id should be present' do
-    micropost.user_id = nil
-    expect(micropost.valid?).to be false
-  end
+  it { should validate_presence_of(:content) }
 
-  it 'content should be present' do
-    micropost.content = '   '
-    expect(micropost.valid?).to be false
-  end
+  it { should validate_presence_of(:user_id) }
 
-  it 'content should be at most 140 characters' do
-    micropost.content = 'a' * 141
-    expect(micropost.valid?).to be false
-  end
+  it { should validate_presence_of(:content).with_message("can't be blank") }
+
+  it { should validate_length_of(:content).is_at_most(140).with_long_message('is too long (maximum is 140 characters)') }
 
   it 'order should be most recent first' do
     most_recent_micropost = user.microposts.create!(content: micropost.content)
