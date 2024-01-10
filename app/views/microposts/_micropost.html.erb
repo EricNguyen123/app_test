@@ -13,9 +13,11 @@
             <% end %>
         </span>
     </div>
-    <div class="reply-list">
+    <div class="reply-list reply-box-all">
         <div class="reply-comment reply-comment-<%= dom_id micropost %>">
-            <%= render 'shared/reply', micropost: micropost %> 
+            <% Micropost.where(micropost_id: micropost.id).reverse_each do |comment|%>
+                <%= render 'shared/reply', comment: comment %> 
+            <%end%>
         </div>
         <div class="box-rep-form">
             <%= render 'shared/reply_form', micropost: micropost, comment: @micropost %>

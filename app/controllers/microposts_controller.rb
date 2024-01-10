@@ -20,7 +20,7 @@ class MicropostsController < ApplicationController
     begin
       @micropost.destroy!
       flash[:success] = 'Micropost deleted'
-    rescue ActiveRecord::RecordNotDestroyed => e
+    rescue ActiveRecord::RecordNotDestroyed
       flash[:error] = 'Micropost could not be deleted'
     end
     redirect_to request.referrer || root_url
@@ -45,8 +45,7 @@ class MicropostsController < ApplicationController
   def handle_comment_save(micropost)
     return unless params[:micropost][:micropost_id]
 
-    micropost = Micropost.find_by(id: micropost.micropost_id)
-    html_content = render_to_string(partial: 'shared/reply', locals: { micropost: }).squish
+    html_content = render_to_string(partial: 'shared/reply', locals: { comment: micropost }).squish
     render json: { success: true, micropost:, html_content: }
   end
 
