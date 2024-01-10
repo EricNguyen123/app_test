@@ -1,4 +1,4 @@
-<%= form_with(model: [micropost, comment], local: true, html: { class: "form-post", id: "form-post-#{micropost.id}", remote: true }) do |f| %> 
+<%= form_with(model: [micropost, comment], url: micropost_microposts_path(micropost), method: :post, html: { class: "form-post", id: "form-post-#{micropost.id}", remote: true }) do |f| %> 
     <%= render 'shared/error_messages', object: f.object %> 
     <div class="field">
         <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt", id: "#{micropost.id}" %> 

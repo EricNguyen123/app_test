@@ -1,4 +1,4 @@
-<% Micropost.where(micropost_id: micropost.id).reverse_each do |comment|%>
+
     <div class="blog-comment">
         <div class="item-comment" id="<%= dom_id comment %>">
             <%= render "shared/edit", comment: comment %>
@@ -22,18 +22,18 @@
             </div>
         </div>
         <div class="reply-list reply-list-<%= dom_id comment %>">
-            <% if Micropost.find_by(micropost_id: comment.id)%>
                 <div class="reply-comment reply-comment-<%= dom_id comment %>" id="reply-comment-<%= dom_id comment %>">
-                    <%= render "shared/reply", micropost: comment%>
+                    <% Micropost.where(micropost_id: comment.id).reverse_each do |comment|%>
+                        <%= render 'shared/reply', comment: comment %>
+                    <%end%>
                 </div>
-            <%end%>
-            <div class="box-reply box-reply-<%= dom_id comment %> box-rep-cmt box-rep-form">
-                <%= render 'shared/reply_form', micropost: comment, comment: @micropost %>
-            </div>
-            <div class="box-edit box-edit-<%= dom_id comment %> box-edit-cmt box-edit-form">
-                <%= render 'shared/edit_form', micropost: comment, comment: @micropost %>
-            </div>
+                <div class="box-reply box-reply-<%= dom_id comment %> box-rep-cmt box-rep-form">
+                    <%= render 'shared/reply_form', micropost: comment, comment: @micropost %>
+                </div>
+                <div class="box-edit box-edit-<%= dom_id comment %> box-edit-cmt box-edit-form">
+                    <%= render 'shared/edit_form', micropost: comment, comment: @micropost %>
+                </div>
         </div>
     </div>
-<%end%>
+
 
