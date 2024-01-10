@@ -27,10 +27,9 @@ class MicropostsController < ApplicationController
   end
 
   def update
-    micropost = Micropost.find_by(id: params[:micropost][:id])
+    micropost = @micropost
     return unless micropost.update(micropost_params)
 
-    @micropost = micropost
     html_content = render_to_string(partial: 'shared/edit', locals: { comment: micropost }).squish
     render json: { success: true, micropost:, html_content: }
   end
