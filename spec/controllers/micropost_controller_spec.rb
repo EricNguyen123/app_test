@@ -86,6 +86,13 @@ RSpec.describe MicropostsController, type: :controller do
         expect(comment).to eq(nil)
       end
 
+      it 'does not delete micropost and sets error flash message' do
+        allow_any_instance_of(Micropost).to receive(:destroy!).and_raise(ActiveRecord::RecordNotDestroyed)
+        delete :destroy, params: { id: micropost.id }
+        expect(response).to redirect_to(request.referrer || root_url)
+        expect(flash[:error]).to eq('Micropost could not be deleted')
+      end
+
       it 'deletes the micropost and associated comments when a micropost is deleted' do
         comment = micropost.microposts.create(micropost_id: micropost.id, user_id: user.id)
         delete :destroy, params: { id: micropost.id }
