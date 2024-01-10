@@ -27,11 +27,10 @@ class MicropostsController < ApplicationController
   end
 
   def update
-    micropost = @micropost
-    return unless micropost.update(micropost_params)
+    return unless @micropost.update(micropost_params)
 
-    html_content = render_to_string(partial: 'shared/edit', locals: { comment: micropost }).squish
-    render json: { success: true, micropost:, html_content: }
+    html_content = render_to_string(partial: 'shared/edit', locals: { comment: @micropost }).squish
+    render json: { success: true, micropost: @micropost, html_content: }
   end
 
   private
