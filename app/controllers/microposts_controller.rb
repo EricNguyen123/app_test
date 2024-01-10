@@ -3,16 +3,10 @@
 # Controller responsible for managing microposts.
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
-  before_action :correct_user, only: :destroy
+  before_action :correct_user, only: %i[destroy update]
   def create
-    if params[:micropost][:micropost_id]
-      micropost = Micropost.find_by(id: params[:micropost][:micropost_id])
-      @micropost = micropost.microposts.build(micropost_params)
-    else
-      @micropost = current_user.microposts.build(micropost_params)
-    end
+    @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
-
     if @micropost.save
       handle_micropost_save
       handle_comment_save(@micropost)
@@ -23,19 +17,20 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-    @micropost.destroy!
-    flash[:success] = 'Micropost deleted'
+    begin
+      @micropost.destroy!
+      flash[:success] = 'Micropost deleted'
+    rescue ActiveRecord::RecordNotDestroyed => e
+      flash[:error] = 'Micropost could not be deleted'
+    end
     redirect_to request.referrer || root_url
   end
 
   def update
-    return unless params[:micropost][:id]
-
     micropost = Micropost.find_by(id: params[:micropost][:id])
     return unless micropost.update(micropost_params)
 
     @micropost = micropost
-    @micropost.image.attach(params[:micropost][:image]) if params[:micropost][:image]
     html_content = render_to_string(partial: 'shared/edit', locals: { comment: micropost }).squish
     render json: { success: true, micropost:, html_content: }
   end
