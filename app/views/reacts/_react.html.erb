@@ -1,0 +1,10 @@
+<% React.emotions.each do |emotion| %>
+  <div class="reaction-button" id="<%= emotion %>-<%= micropost.id %>">
+    <% if current_user.reacts.where(micropost: micropost, action: emotion).exists? %>
+      <%= render "reacts/remove_action", micropost: micropost, emotion: emotion %>
+    <% else %>
+      <%= render "reacts/perform_action", micropost: micropost, emotion: emotion %>
+    <% end %>
+  </div>
+  
+<% end %>

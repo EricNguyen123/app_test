@@ -1,0 +1,5 @@
+<% React.where(user_id: current_user.id, action: emotion , micropost_id: micropost.id).each do |item|%>
+  <div class="reaction-button-remove btn-action" data-action="delete" data-emotion-id="<%= item.id %>" data-user-id="<%= current_user.id%>" data-micropost-id="<%= micropost.id %>" data-emotion="<%= item.action %>">
+    Bỏ <%= item.action %>
+  </div>
+<% end %>

@@ -2,6 +2,9 @@
     <div class="blog-comment">
         <div class="item-comment" id="<%= dom_id comment %>">
             <%= render "shared/edit", comment: comment %>
+            <div class="box-react">
+              <%= render 'reacts/react', micropost: comment%>
+            </div>
             <div class="footer-cmt">
                 <span class="timestamp">
                     Comment <%= time_ago_in_words(comment.created_at) %> ago.
