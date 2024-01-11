@@ -1,43 +1,41 @@
 function handlePostOrEdit() {
-  $('.form-post').each(function(f) {
-    var formPostId = $(this).attr('id');
-    var parts = formPostId.split("-");
-    var fID = parts[parts.length - 1];
-    $('#' + formPostId).off("submit").on("submit", function(e) {
-      e.preventDefault();
-      var formData = new FormData(this);
-      $.ajax({
-          type: 'POST',
-          url: $(this).attr('action'),
-          data: formData,
-          processData: false,
-          contentType: false,
-          dataType: 'json',
-          success: function(response) {
-            if (response.success) {
-              var res = response.micropost.micropost_id;
-              var res_input = response.micropost.id;
-              $('.reply-comment-micropost_' + res).append(response.html_content);
-              $('#' + res_input).val("");
-              $('#' + fID).val("");
-            } else {
-              alert('Error: ' + response.errors.join(', '));
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error(status + ': ' + error);
-          }
-      });
-      
-    });
-  })
-
-  $('.form-edit').each(function() {
-    const formEditId = $(this).attr('id');
-    if (formEditId) {
-      $('#' + formEditId).off("submit").on("submit", function(e) {
+      $(document).on('submit', '.form-post', function(e){
+        const formPostId = $(this).attr('id');
+        const parts = formPostId.split("-");
+        const fID = parts[parts.length - 1];
+        console.log(1)
         e.preventDefault();
-        var formData = new FormData(this);
+        if ($(this).attr('method') == 'post'){const formData = new FormData(this);
+          $.ajax({
+              type: 'POST',
+              url: $(this).attr('action'),
+              data: formData,
+              processData: false,
+              contentType: false,
+              dataType: 'json',
+              success: function(response) {
+                if (response.success) {
+                  var res = response.micropost.micropost_id;
+                  var res_input = response.micropost.id;
+                  $('.reply-comment-micropost_' + res).append(response.html_content);
+                  $('#' + res_input).val("");
+                  $('#' + fID).val("");
+                } else {
+                  alert('Error: ' + response.errors.join(', '));
+                }
+              },
+              error: function(xhr, status, error) {
+                console.error(status + ': ' + error);
+              }
+          });
+        }
+      });
+
+      $(document).on('submit', '.form-edit', function(e){
+        e.preventDefault();
+        console.log($(this).attr('action'))
+        const formData = new FormData(this);
+        console.log(formData);
         $.ajax({
           type: 'PATCH',
           url: $(this).attr('action'),
@@ -46,8 +44,8 @@ function handlePostOrEdit() {
           contentType: false,
           dataType: 'json',
           success: function(response) {
+            console.log(response)
             if (response.success) {
-              var res = response.micropost.micropost_id;
               var res_input = response.micropost.id;
               $('#p-micropost_' + res_input).remove()
               $('#micropost_' + res_input).prepend(response.html_content);
@@ -61,53 +59,32 @@ function handlePostOrEdit() {
           }
         });
       })
-    }
-  })
+   
 
-  $('.btn-reply').each(function(button) {
-    var commentId = $(this).attr('id');
-    $('.btn-reply-' + commentId).on('click', function() {
-        $('.box-rep-cmt').addClass('box-reply');
-        $('.box-edit-cmt').addClass('box-edit');
-        $('.box-reply-' + commentId).removeClass('box-reply');
-        $('.box-reply-' + commentId).css({
+      $(document).on('click', '.btn-reply', function(){
+        const commentId = $(this).attr('id');
+        const $form = $(this).closest('.blog-comment');
+        $form.find('.box-rep-cmt').addClass('box-reply');
+        $form.find('.box-edit-cmt').addClass('box-edit');
+        $form.find('.box-reply-' + commentId).removeClass('box-reply');
+        $form.find('.box-reply-' + commentId).css({
             display: 'flex !important'
         });
-        $('#' + commentId).val("");
-    });
-  });
-
-  $('.btn-edit').each(function(button) {
-      var commentId = $(this).attr('id');
-      $('.btn-edit-' + commentId).on('click', function() {
-          $('.box-edit-cmt').addClass('box-edit');
-          $('.box-rep-cmt').addClass('box-reply');
-          $('.box-edit-' + commentId).removeClass('box-edit');
-          $('.box-edit-' + commentId).css({
-              display: 'flex !important'
-          });
+        $form.find('#' + commentId).val("");
       });
-  });
-}
 
+      $(document).on('click', '.btn-edit', function() {
+        const commentId = $(this).attr('id');
+        const $form = $(this).closest('.blog-comment');
+        $form.find('.box-rep-cmt').addClass('box-reply');
+        $form.find('.box-edit-cmt').addClass('box-edit');
+        $form.find('.box-edit-' + commentId).removeClass('box-edit');
+        $form.find('.box-edit-' + commentId).css({
+          display: 'flex !important'
+        });
+      });
+}
 
 $(document).on('turbo:load', function() {
   handlePostOrEdit();
 });
-
-var observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-
-      if (mutation.addedNodes.length) {
-          mutation.addedNodes.forEach(function(node) {
-              if (node.nodeName === 'DIV') {
-                handlePostOrEdit()
-              }
-          });
-      }
-  });
-});
-
-var config = { childList: true, subtree: true };
-
-observer.observe(document.body, config);
