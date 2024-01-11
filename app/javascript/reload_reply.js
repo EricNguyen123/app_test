@@ -5,28 +5,30 @@ function handlePostOrEdit() {
     const fID = parts[parts.length - 1];
     e.preventDefault();
     const formData = new FormData(this);
-    $.ajax({
-      type: 'POST',
-      url: $(this).attr('action'),
-      data: formData,
-      processData: false,
-      contentType: false,
-      dataType: 'json',
-      success: function(response) {
-        if (response.success) {
-          var res = response.micropost.micropost_id;
-          var res_input = response.micropost.id;
-          $('.reply-comment-micropost_' + res).append(response.html_content);
-          $('#' + res_input).val("");
-          $('#' + fID).val("");
-        } else {
-          alert('Error: ' + response.errors.join(', '));
+    if($(this).attr('method') === 'post') {
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            var res = response.micropost.micropost_id;
+            var res_input = response.micropost.id;
+            $('.reply-comment-micropost_' + res).append(response.html_content);
+            $('#' + res_input).val("");
+            $('#' + fID).val("");
+          } else {
+            alert('Error: ' + response.errors.join(', '));
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error(status + ': ' + error);
         }
-      },
-      error: function(xhr, status, error) {
-        console.error(status + ': ' + error);
-      }
-    });
+      });
+    }
   });
 
   $(document).on('submit', '.form-edit', function(e){
