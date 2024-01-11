@@ -1,39 +1,36 @@
 function handlePostOrEdit() {
-  $(document).on('submit', '.form-post', function(e){
+  $(document).off('submit').on('submit', '.form-post', function(e){
     const formPostId = $(this).attr('id');
     const parts = formPostId.split("-");
     const fID = parts[parts.length - 1];
     e.preventDefault();
     const formData = new FormData(this);
-    if($(this).attr('method') === 'post') {
-      $.ajax({
-        type: 'POST',
-        url: $(this).attr('action'),
-        data: formData,
-        processData: false,
-        contentType: false,
-        dataType: 'json',
-        success: function(response) {
-          if (response.success) {
-            var res = response.micropost.micropost_id;
-            var res_input = response.micropost.id;
-            $('.reply-comment-micropost_' + res).append(response.html_content);
-            $('#' + res_input).val("");
-            $('#' + fID).val("");
-          } else {
-            alert('Error: ' + response.errors.join(', '));
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error(status + ': ' + error);
+    $.ajax({
+      type: 'POST',
+      url: $(this).attr('action'),
+      data: formData,
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: function(response) {
+        if (response.success) {
+          var res = response.micropost.micropost_id;
+          var res_input = response.micropost.id;
+          $('.reply-comment-micropost_' + res).append(response.html_content);
+          $('#' + res_input).val("");
+          $('#' + fID).val("");
+        } else {
+          alert('Error: ' + response.errors.join(', '));
         }
-      });
-    }
+      },
+      error: function(xhr, status, error) {
+        console.error(status + ': ' + error);
+      }
+    });
   });
 
   $(document).on('submit', '.form-edit', function(e){
     e.preventDefault();
-    console.log($(this).attr('action'))
     const formData = new FormData(this);
     $.ajax({
       type: 'PATCH',
@@ -43,7 +40,6 @@ function handlePostOrEdit() {
       contentType: false,
       dataType: 'json',
       success: function(response) {
-        console.log(response)
         if (response.success) {
           var res_input = response.micropost.id;
           $('#p-micropost_' + res_input).remove()
