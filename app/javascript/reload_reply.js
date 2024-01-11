@@ -3,7 +3,6 @@ function handlePostOrEdit() {
     const formPostId = $(this).attr('id');
     const parts = formPostId.split("-");
     const fID = parts[parts.length - 1];
-    console.log(1)
     e.preventDefault();
     const formData = new FormData(this);
       $.ajax({
