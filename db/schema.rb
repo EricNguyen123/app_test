@@ -49,14 +49,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_033957) do
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
-  create_table "reacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "action"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "micropost_id"
-  end
-
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
