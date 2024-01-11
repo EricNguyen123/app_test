@@ -1,0 +1,12 @@
+<%= form_with(model: [micropost, comment], url: micropost_microposts_path(micropost), method: :post, html: { class: "form-post", id: "form-post-#{micropost.id}", remote: true }) do |f| %> 
+    <%= render 'shared/error_messages', object: f.object %> 
+    <div class="field">
+        <%= f.text_field :content, placeholder: "Comment...", class: "box-input box-input-cmt", id: "#{micropost.id}" %> 
+    </div>
+    <%= f.hidden_field :micropost_id, value: micropost.id, class: "micropost-id-cmt" %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit "Comment", class: "btn btn-primary btn-cmt btn-cmt-#{micropost.id}" %> 
+    <span class="image">
+        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %> 
+    </span>
+<% end %>

@@ -3,8 +3,10 @@
 # model micropost
 class Micropost < ApplicationRecord
   belongs_to :user
+  has_many :microposts, dependent: :destroy
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
+  scope :without_micropost_id, -> { where(micropost_id: nil) }
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
   validate :image_content_type

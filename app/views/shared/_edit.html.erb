@@ -1,0 +1,13 @@
+<% Micropost.where(id: comment.id).each do |comment|%>
+  <p class="content-comment" id="p-<%= dom_id comment %>">
+    <%= link_to gravatar_for(User.find_by(id: comment.user_id), size: 26), User.find_by(id: comment.user_id) %>
+    <strong class="user">
+      <%= link_to User.find_by(id: comment.user_id).name, User.find_by(id: comment.user_id) %>
+    </strong>
+    <span class="time-comment"><%= comment.created_at.to_s[0...10]%></span>
+    <br>
+    <%= comment.content %>
+    <br>
+    <%= link_to image_tag(comment.display_image,  width: "100", class: "img-post"), comment.image if comment.image.attached?%>
+  </p>
+<% end %>
