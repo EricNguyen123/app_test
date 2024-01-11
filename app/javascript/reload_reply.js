@@ -5,7 +5,7 @@ function handlePostOrEdit() {
         const fID = parts[parts.length - 1];
         console.log(1)
         e.preventDefault();
-        if ($(this).attr('method') == 'post'){const formData = new FormData(this);
+        const formData = new FormData(this);
           $.ajax({
               type: 'POST',
               url: $(this).attr('action'),
@@ -28,14 +28,12 @@ function handlePostOrEdit() {
                 console.error(status + ': ' + error);
               }
           });
-        }
       });
 
       $(document).on('submit', '.form-edit', function(e){
         e.preventDefault();
         console.log($(this).attr('action'))
         const formData = new FormData(this);
-        console.log(formData);
         $.ajax({
           type: 'PATCH',
           url: $(this).attr('action'),
