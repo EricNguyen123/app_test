@@ -1,5 +1,5 @@
 $(document).on('turbo:load', function() {
-  $(document).on('click', '.btn-action', function() {
+  $(document).off('click').on('click', '.btn-action', function() {
     let micropostID = $(this).data('micropost-id');
     let emotion = $(this).data('emotion');
     let action = $(this).data('action');
