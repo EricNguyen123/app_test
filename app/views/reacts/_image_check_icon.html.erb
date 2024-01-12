@@ -2,6 +2,6 @@
   <%= render "reacts/remove_action", micropost: micropost, emotion: React.find_by(user_id: current_user.id, micropost_id: micropost.id).action %>
 <% else %>
   <div class="reaction-button-perform btn-action" data-action="create" data-user-id="<%= current_user.id%>" data-micropost-id="<%= micropost.id %>" data-emotion="<%= emotions[0][:emotion] %>">
-    <img class="button-check-icon" src="/assets/<%= btnItem %>" alt="icon">
+    <img class="button-check-icon" src="/assets/<%= btn_item %>" alt="icon">
   </div>
 <% end %>

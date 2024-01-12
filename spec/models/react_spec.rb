@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe React, type: :model do
@@ -9,13 +11,13 @@ RSpec.describe React, type: :model do
   it { should validate_presence_of(:action) }
 
   it do
-    should validate_inclusion_of(:action).
-      in_array(%w(like sad angry wow))
+    should validate_inclusion_of(:action)
+      .in_array(%w[like sad angry wow])
   end
 
   describe '.emotions' do
     it 'returns an array of emotions' do
-      expect(React.emotions).to eq(%w(like sad angry wow))
+      expect(React.emotions).to eq(%w[like sad angry wow])
     end
   end
 end

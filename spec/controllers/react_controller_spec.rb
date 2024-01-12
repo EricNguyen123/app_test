@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ReactsController, type: :controller do
@@ -6,21 +8,21 @@ RSpec.describe ReactsController, type: :controller do
   let(:valid_attributes) { { user_id: user.id, micropost_id: micropost.id, action: 'like' } }
   let(:invalid_attributes) { { user_id: nil, micropost_id: nil, action: nil } }
 
-  describe "POST #create" do
-    context "with valid params" do
+  describe 'POST #create' do
+    context 'with valid params' do
       before { log_in user }
-      it "creates a new React" do
-        expect {
+      it 'creates a new React' do
+        expect do
           post :create, params: { react: valid_attributes }
-        }.to change(React, :count).by(1)
+        end.to change(React, :count).by(1)
       end
 
-      it "renders a successful response" do
+      it 'renders a successful response' do
         post :create, params: { react: valid_attributes }
         expect(response).to be_successful
       end
 
-      it "does not create a new React" do
+      it 'does not create a new React' do
         allow_any_instance_of(React).to receive(:save).and_return(false)
         post :create, params: { react: valid_attributes }
         expect(response).to have_http_status(:success)
@@ -30,12 +32,12 @@ RSpec.describe ReactsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
+    context 'with invalid params' do
       before { log_in user }
-      it "does not create a new React if micropost_id does not exist" do
-        expect {
+      it 'does not create a new React if micropost_id does not exist' do
+        expect do
           post :create, params: { react: invalid_attributes }
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
@@ -45,9 +47,9 @@ RSpec.describe ReactsController, type: :controller do
       before { log_in user }
       it 'destroys the react' do
         react = micropost.reacts.create!(action: 'like', user_id: user.id, micropost_id: micropost.id)
-        expect {
+        expect do
           delete :destroy, params: { id: react.id, react: { id: react.id, action: 'like', user_id: user.id, micropost_id: micropost.id } }
-        }.to change(React, :count).by(-1)
+        end.to change(React, :count).by(-1)
 
         expect(response).to have_http_status(:success)
         json_response = JSON.parse(response.body)
@@ -59,9 +61,9 @@ RSpec.describe ReactsController, type: :controller do
     context 'when react does not exist' do
       before { log_in user }
       it 'does not destroy the react' do
-        expect {
+        expect do
           delete :destroy, params: { id: 9999, react: { id: 9999, action: 'like', user_id: user.id, micropost_id: micropost.id } }
-        }.to_not change(React, :count)
+        end.to_not change(React, :count)
 
         expect(response).to have_http_status(:success)
         json_response = JSON.parse(response.body)
@@ -72,11 +74,11 @@ RSpec.describe ReactsController, type: :controller do
       it 'does not destroy the react if destroy method returns false' do
         react = micropost.reacts.create!(action: 'like', user_id: user.id, micropost_id: micropost.id)
         allow_any_instance_of(React).to receive(:destroy).and_return(false)
-      
-        expect {
+
+        expect do
           delete :destroy, params: { id: react.id, react: { id: react.id, action: 'like', user_id: user.id, micropost_id: micropost.id } }
-        }.to_not change(React, :count)
-      
+        end.to_not change(React, :count)
+
         expect(response).to have_http_status(:success)
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to eq(false)

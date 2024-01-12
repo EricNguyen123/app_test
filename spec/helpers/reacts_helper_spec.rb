@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # Specs in this file have access to a helper object that includes
@@ -14,17 +16,17 @@ RSpec.describe ReactsHelper, type: :helper do
   describe '#emotions' do
     it 'returns an array of emotions' do
       expect(helper.emotions).to eq([
-        { emotion: 'like', image: 'like.svg' },
-        { emotion: 'angry', image: 'angry.svg' },
-        { emotion: 'sad', image: 'sad.svg' },
-        { emotion: 'wow', image: 'wow.svg' },
-      ])
+                                      { emotion: 'like', image: 'like.svg' },
+                                      { emotion: 'angry', image: 'angry.svg' },
+                                      { emotion: 'sad', image: 'sad.svg' },
+                                      { emotion: 'wow', image: 'wow.svg' }
+                                    ])
     end
   end
 
-  describe '#btnItem' do
+  describe '#btn_item' do
     it 'returns the like react button image' do
-      expect(helper.btnItem).to eq('like_react_btn.svg')
+      expect(helper.btn_item).to eq('like_react_btn.svg')
     end
   end
 end
