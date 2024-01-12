@@ -29,8 +29,12 @@ $(document).on('turbo:load', function() {
         if(response.success) {
           if(action === 'create') {
             $('#' + emotion + '-' + micropostID).html(response.html_content);
+            $('#box-check-' + micropostID).html(response.html_content);
+            $('#total-react-' + micropostID).html(response.html_total_react);
           } else {
             $('#' + emotion + '-' + micropostID).html(response.html_content);
+            $('#box-check-' + micropostID).html(response.html_cancel);
+            $('#total-react-' + micropostID).html(response.html_total_react);
           }
         }
       },

@@ -1,5 +1,9 @@
-<% React.where(user_id: current_user.id, action: emotion , micropost_id: micropost.id).each do |item|%>
-  <div class="reaction-button-remove btn-action" data-action="delete" data-emotion-id="<%= item.id %>" data-user-id="<%= current_user.id%>" data-micropost-id="<%= micropost.id %>" data-emotion="<%= item.action %>">
-    Bỏ <%= item.action %>
+<% React.where(user_id: current_user.id, action: emotion , micropost_id: micropost.id).each do |icon|%>
+  <div class="reaction-button-remove btn-action" data-action="delete" data-emotion-id="<%= icon.id %>" data-user-id="<%= current_user.id%>" data-micropost-id="<%= micropost.id %>" data-emotion="<%= icon.action %>">
+    <% emotions.each do |item|%>
+      <% if item[:emotion] === icon.action %>
+        <img class="emotion-button-icon" src="/assets/<%= item[:image] %>" alt="icon">
+      <% end %>
+    <% end %>
   </div>
 <% end %>
