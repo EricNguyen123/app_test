@@ -18,7 +18,7 @@ class ReactsController < ApplicationController
 
   def destroy
     @react = @micropost.reacts.find_by(id: params[:react][:id])
-    if @react.destroy
+    if @react && @react.destroy
       html_content = render_to_string(partial: 'reacts/perform_action', locals: { micropost: @micropost, emotion: params[:react][:action] }).squish
       html_cancel = render_to_string(partial: 'reacts/image_check_icon', locals: { micropost: @micropost }).squish
       html_total_react = render_to_string(partial: 'reacts/total_react', locals: { micropost: @micropost }).squish
@@ -31,6 +31,7 @@ class ReactsController < ApplicationController
   private
 
   def set_micropost
+    redirect_to root_url unless params[:react].present?
     @micropost = Micropost.find(params[:react][:micropost_id])
   end
 

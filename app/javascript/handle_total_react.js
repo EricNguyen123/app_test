@@ -3,7 +3,9 @@ $(document).on('turbo:load', function() {
 
   $(document).on("mouseenter", '.box-detail-total-react', function() {
     isHoverUserReact = true;
-    const boxID = $(this).attr('id');
+    const tagId = $(this).attr('id');
+    const parts = tagId.split("-");
+    const boxID = parts[parts.length - 1];
     showBoxTotalReact(boxID);
   }).on("mouseleave", '.box-detail-total-react', function() {
     isHoverUserReact = false;

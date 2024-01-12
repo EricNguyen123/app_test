@@ -21,7 +21,6 @@ Rails.application.routes.draw do
 
   get '/settings', to: 'users#edit'
 
-  get '/reacts/image_react', to: 'reacts#image'
   resources :users do
     member do
       get :following, :followers

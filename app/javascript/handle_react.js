@@ -3,7 +3,9 @@ $(document).on('turbo:load', function() {
 
   $(document).on("mouseenter", '.button-box-react', function() {
     isHovered = true;
-    const boxID = $(this).attr('id');
+    const tagId = $(this).attr('id');
+    const parts = tagId.split("-");
+    const boxID = parts[parts.length - 1];
     setTimeout(showBoxReact(boxID), 1000);
   }).on("mouseleave", '.button-box-react', function() {
     isHovered = false;
