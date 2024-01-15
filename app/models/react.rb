@@ -7,9 +7,13 @@ class React < ApplicationRecord
 
   validates :user_id, presence: true
   validates :micropost_id, presence: true
-  validates :action, presence: true, inclusion: { in: %w[like sad angry wow] }
-
+  validates :action, presence: true
+  enum action: { like: 0, sad: 1, angry: 2, wow: 3 }
   def self.emotions
-    %w[like sad angry wow]
+    actions.keys
+  end
+
+  def self.enum_reacts
+    actions
   end
 end

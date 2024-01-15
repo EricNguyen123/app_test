@@ -2,16 +2,16 @@
   User React
 </srtong>
 <br>
-<% React.where(micropost_id: micropost.id).last(3).reverse_each do |icon|%>
+<% micropost.reacts.last(3).reverse_each do |icon|%>
   <span class="name-user-react">
     <%= User.find_by(id: icon.user_id).name %>
   </span>
   <br>
 <% end %>
 <div class="total-user-react">
-  <% if React.where(micropost_id: micropost.id).count > 3 %>
+  <% if micropost.reacts.count > 3 %>
     <span class="detail-total-user-react">
-      and <%= React.where(micropost_id: micropost.id).count - 3 %> user others
+      and <%= micropost.reacts.count - 3 %> user others
     </span>
   <% end %>
 </div>

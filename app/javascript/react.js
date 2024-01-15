@@ -1,11 +1,13 @@
 $(document).on('turbo:load', function() {
-  $(document).off('click').on('click', '.btn-action', function() {
-    let micropostID = $(this).data('micropost-id');
+  $(document).off('click', '.btn-action').on('click', '.btn-action', function() {
+    let tag = $(this).closest('.button-box-react');
+    const tagId = tag.attr('id');
+    const parts = tagId.split("-");
+    const micropostID = parts[parts.length - 1];
     let emotion = $(this).data('emotion');
     let action = $(this).data('action');
     let userID = $(this).data('user-id');
-    let emotionID = $(this).data('emotion-id');
-    
+
     $.ajaxSetup({
       headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -17,7 +19,6 @@ $(document).on('turbo:load', function() {
       type: action === 'create' ? 'POST' : 'DELETE',
       data: {
         react: {
-          id: emotionID,
           micropost_id: micropostID,
           action: emotion,
           user_id: userID
@@ -28,11 +29,9 @@ $(document).on('turbo:load', function() {
       success: function(response) {
         if(response.success) {
           if(action === 'create') {
-            $('#' + emotion + '-' + micropostID).html(response.html_content);
             $('#box-check-' + micropostID).html(response.html_content);
             $('#total-react-' + micropostID).html(response.html_total_react);
           } else {
-            $('#' + emotion + '-' + micropostID).html(response.html_content);
             $('#box-check-' + micropostID).html(response.html_cancel);
             $('#total-react-' + micropostID).html(response.html_total_react);
           }

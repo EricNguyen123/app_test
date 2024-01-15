@@ -4,7 +4,7 @@
 class CreateReacts < ActiveRecord::Migration[7.1]
   def change
     create_table :reacts do |t|
-      t.string :action
+      t.integer :action
 
       t.timestamps
     end

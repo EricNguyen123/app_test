@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_111_063_432) do
+ActiveRecord::Schema[7.1].define(version: 20_240_115_083_430) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -52,11 +52,11 @@ ActiveRecord::Schema[7.1].define(version: 20_240_111_063_432) do
   end
 
   create_table 'reacts', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'action'
+    t.integer 'action'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'user_id'
-    t.string 'micropost_id'
+    t.integer 'user_id'
+    t.integer 'micropost_id'
   end
 
   create_table 'relationships', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|

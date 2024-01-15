@@ -1,5 +1,5 @@
 $(document).on('turbo:load', function() {
-  let isHoverUserReact = false;
+  var isHoverUserReact = false;
 
   $(document).on("mouseenter", '.box-detail-total-react', function() {
     isHoverUserReact = true;

@@ -7,6 +7,7 @@ RSpec.describe ReactsController, type: :controller do
   let(:micropost) { FactoryBot.create(:micropost, user:) }
   let(:valid_attributes) { { user_id: user.id, micropost_id: micropost.id, action: 'like' } }
   let(:invalid_attributes) { { user_id: nil, micropost_id: nil, action: nil } }
+  let(:react) { FactoryBot.create(:react, action: 'like', user:, micropost:) }
 
   describe 'POST #create' do
     context 'with valid params' do
@@ -15,11 +16,8 @@ RSpec.describe ReactsController, type: :controller do
         expect do
           post :create, params: { react: valid_attributes }
         end.to change(React, :count).by(1)
-      end
-
-      it 'renders a successful response' do
-        post :create, params: { react: valid_attributes }
         expect(response).to be_successful
+        expect(React.find_by(user_id: user.id, micropost_id: micropost.id)[:action]).to eq(valid_attributes[:action])
       end
 
       it 'does not create a new React' do
@@ -38,6 +36,32 @@ RSpec.describe ReactsController, type: :controller do
         expect do
           post :create, params: { react: invalid_attributes }
         end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe '#react_update' do
+    context 'when react exists' do
+      before { log_in user }
+      it 'updates the react' do
+        params = ActionController::Parameters.new(react: { action: 'new_action', micropost_id: micropost.id, user_id: user.id })
+        allow(controller).to receive(:params).and_return(params)
+        allow(controller).to receive(:react_exists?).and_return(react)
+
+        expect(react).to receive(:update).with(params[:react].permit!).and_return(true)
+
+        controller.send(:react_update)
+      end
+
+      it 'renders json error when update fails' do
+        params = ActionController::Parameters.new(react: { action: 'new_action', micropost_id: micropost.id, user_id: user.id })
+        allow(controller).to receive(:params).and_return(params)
+        allow(controller).to receive(:react_exists?).and_return(react)
+
+        expect(react).to receive(:update).with(params[:react].to_unsafe_h).and_return(false)
+        expect(controller).to receive(:render).with(json: { success: false, status: 'error' })
+
+        controller.send(:react_update)
       end
     end
   end

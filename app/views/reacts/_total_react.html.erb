@@ -3,16 +3,16 @@
     <%= render "reacts/total_user_react", micropost: micropost%>
   </div>
   <div class="box-total-react">
-    <% React.where(micropost_id: micropost.id).last(3).reverse_each do |icon|%>
+    <% micropost.reacts.last(3).reverse_each do |icon|%>
       <% emotions.each do |item|%>
         <% if item[:emotion] === icon.action %>
           <img class="total-button-icon" src="/assets/<%= item[:image] %>" alt="icon">
         <% end %>
       <% end %>
     <% end %>
-    <% if React.where(micropost_id: micropost.id).count > 0 %>
+    <% if micropost.reacts.count > 0 %>
       <span class="title-total-react">
-        <%= React.where(micropost_id: micropost.id).count %>
+        <%= micropost.reacts.count %>
       </span>
     <% end %>
   </div>

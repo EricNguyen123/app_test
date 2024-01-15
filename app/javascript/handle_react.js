@@ -1,5 +1,5 @@
 $(document).on('turbo:load', function() {
-  let isHovered = false;
+  var isHovered = false;
 
   $(document).on("mouseenter", '.button-box-react', function() {
     isHovered = true;

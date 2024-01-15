@@ -3,7 +3,6 @@
 # The base controller for the application.
 class ApplicationController < ActionController::Base
   include SessionsHelper
-  include ReactsHelper
 
   private
 
