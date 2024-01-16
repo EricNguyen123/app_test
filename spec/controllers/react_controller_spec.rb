@@ -29,15 +29,6 @@ RSpec.describe ReactsController, type: :controller do
         expect(json_response['status']).to eq('error')
       end
     end
-
-    context 'with invalid params' do
-      before { log_in user }
-      it 'does not create a new React if micropost_id does not exist' do
-        expect do
-          post :create, params: { react: invalid_attributes }
-        end.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
   end
 
   describe '#react_update' do

@@ -2,7 +2,7 @@
     <div class="item-comment" id="<%= dom_id comment %>">
         <%= render "shared/edit", comment: comment %>
         <div class="total-react" id="total-react-<%= comment.id %>">
-            <%= render "reacts/total_react", micropost: comment %>
+            <%= render "reacts/total_view", micropost: comment%>
         </div>
         <div class="button-box-react" id="button-box-react-<%= comment.id %>">
             <div class="box-react" id="box-react-<%= comment.id %>">

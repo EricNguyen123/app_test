@@ -1,5 +1,5 @@
-<% React.emotions.each do |emotion| %>
+<% React.actions.keys.each do |emotion| %>
   <div class="reaction-button" id="<%= emotion %>-<%= micropost.id %>">
-      <%= render "reacts/perform_action", emotion: emotion %>
+    <%= render "reacts/perform_action", emotion: emotion %>
   </div>
 <% end %>
