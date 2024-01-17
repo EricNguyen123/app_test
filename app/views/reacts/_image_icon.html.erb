@@ -1,0 +1,5 @@
+<% emotions.each do |item|%>
+  <% if item[:emotion] === emotion %>
+    <img class="emotion-button-icon" src="/assets/<%= item[:image] %>" alt="icon">
+  <% end %>
+<% end %>

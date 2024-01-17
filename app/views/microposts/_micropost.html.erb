@@ -13,6 +13,18 @@
             <% end %>
         </span>
     </div>
+    <div class="total-react" id="total-react-<%= micropost.id %>">
+        <%= render "reacts/total_view", micropost: micropost%>
+    </div>
+    <div class="button-box-react" id="button-box-react-<%= micropost.id %>">
+        <div class="box-react" id="box-react-<%= micropost.id %>">
+            <%= render 'reacts/react', micropost: micropost%>
+        </div>
+        <div class="button-check" id="box-check-<%= micropost.id %>">
+            <%= render "reacts/image_check_icon", micropost: micropost %>
+        </div>
+    </div>
+    
     <div class="reply-list reply-box-all">
         <div class="reply-comment reply-comment-<%= dom_id micropost %>">
             <% Micropost.where(micropost_id: micropost.id).reverse_each do |comment|%>

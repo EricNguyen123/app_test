@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#omniauth'
 
   get '/settings', to: 'users#edit'
+
   resources :users do
     member do
       get :following, :followers
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
   resources :microposts do
     resources :microposts
   end
+  resources :reacts, only: %i[create destroy update]
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]

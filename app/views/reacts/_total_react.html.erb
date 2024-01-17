@@ -1,0 +1,20 @@
+<% micropost_reacts = react.micropost.reacts %>
+<div class="box-detail-total-react" id="box-detail-total-react-<%= react.micropost.id %>">
+  <div class="list-user-react" id="list-user-react-<%= react.micropost.id %>">
+    <%= render "reacts/total_user_react", react: react, micropost_reacts: micropost_reacts %>
+  </div>
+  <div class="box-total-react">
+    <% micropost_reacts.last(3).reverse_each do |icon|%>
+      <% emotions.each do |item|%>
+        <% if item[:emotion] === icon.action %>
+          <img class="total-button-icon" src="/assets/<%= item[:image] %>" alt="icon">
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if micropost_reacts.count > 0 %>
+      <span class="title-total-react">
+        <%= micropost_reacts.count %>
+      </span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<% if current_user.reacts.find_by(micropost_id: micropost.id) %>
+  <%= render "reacts/remove_action", emotion: current_user.reacts.find_by(micropost_id: micropost.id).action %>
+<% else %>
+  <%= render 'reacts/image_handle_icon' %>
+<% end %>

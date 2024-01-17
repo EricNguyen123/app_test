@@ -1,0 +1,3 @@
+<% if micropost.reacts.last(1)[0] %>
+  <%= render "reacts/total_react", react: micropost.reacts.last(1)[0] %>
+<% end %>

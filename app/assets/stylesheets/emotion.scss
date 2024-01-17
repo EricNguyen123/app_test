@@ -1,0 +1,135 @@
+
+$color-box-react-bg: #f7f7f7;
+$gray-react-lighter: #d4d4d4;
+$color-white: rgba(255, 255, 255, 0);
+
+$width-box-react: 180px;
+$width-box-check: 100px;
+
+$height-box-react: 36px;
+$height-button-check: 26px;
+
+$lenght-react-bg: 33px;
+$lenght-img-react: 28px;
+$lenght-img-react-hover: 32px;
+$lenght-button-check-icon: 20px;
+$lenght-total-react-icon: 16px;
+
+$margin-left-react: 50px;
+
+$border-react: 8px;
+
+.button-box-react {
+  position: relative;
+  width: $width-box-check;
+  margin-left: $margin-left-react;
+}
+
+.box-react {
+  position: absolute;
+  bottom: 110%;
+  z-index: 20;
+  width: $width-box-react;
+  height: $height-box-react;
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  background-color: $color-box-react-bg;
+  border-radius: $border-react;
+  cursor: pointer;
+}
+
+.reaction-button {
+  width: $lenght-react-bg;
+  height: $lenght-react-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emotion-button-icon {
+  width: $lenght-img-react;
+  height: $lenght-img-react;
+  &:hover {
+    width: $lenght-img-react-hover;
+    height:$lenght-img-react-hover;
+  }
+}
+
+.reaction-button-remove {
+  width: $lenght-react-bg !important;
+  height: $lenght-react-bg !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $gray-react-lighter;
+  border-radius: $border-react;
+}
+
+.check-display-react {
+  display: flex !important;
+}
+
+.button-check {
+  width: $width-box-check;
+  height: $height-box-react;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-box-react-bg;
+  border-radius: $border-react;
+  border: 1px solid $gray-react-lighter;
+  margin: 3px;
+  cursor: pointer;
+  .button-check-icon {
+    width: $lenght-button-check-icon !important;
+    height: $lenght-button-check-icon !important;
+  }
+  .reaction-button-remove {
+    background-color: $color-white;
+  }
+}
+
+.total-button-icon {
+  width: $lenght-total-react-icon;
+  height: $lenght-total-react-icon;
+}
+
+.title-total-react {
+  margin-left: 5px;
+  font-size: 13px;
+}
+
+.total-react, .box-detail-total-react, .box-total-react {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.box-total-react {
+  margin-left: $margin-left-react;
+  cursor: pointer;
+}
+
+.total-react {
+  position: relative;
+}
+
+.list-user-react {
+  position: absolute;
+  bottom: 110%;
+  z-index: 20;
+  width: max-content;
+  padding: 10px;
+  display: none;
+  background-color: $gray-react-lighter;
+  border-radius: $border-react;
+}
+
+.title-user-react {
+  font-weight: 500;
+}
+
+.check-user-react {
+  display: block !important;
+}
