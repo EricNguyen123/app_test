@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 20_240_115_083_430) do
     t.datetime 'updated_at', null: false
     t.integer 'user_id'
     t.integer 'micropost_id'
+    t.index %w[user_id micropost_id], name: 'index_reacts_on_user_id_and_micropost_id', unique: true
   end
 
   create_table 'relationships', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|

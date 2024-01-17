@@ -7,7 +7,12 @@ class ReactsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
 
   def create
-    react_update
+    @react = current_user.reacts.find_or_initialize_by(
+      micropost_id: react_params[:micropost_id],
+      user: current_user
+    )
+
+    @react.assign_attributes(action: react_params[:action])
 
     if @react.save
       html_content = render_to_string(partial: 'reacts/remove_action', locals: { emotion: @react.action }).squish
@@ -29,20 +34,9 @@ class ReactsController < ApplicationController
     end
   end
 
-  def react_update
-    return @react = current_user.reacts.new(react_params) unless react_exists?
-
-    @react = react_exists?
-    render json: { success: false, status: 'error' } unless @react.update(react_params)
-  end
-
   private
 
   def react_params
     params.require(:react).permit(:action, :micropost_id, :user_id)
-  end
-
-  def react_exists?
-    current_user.reacts.find_by(micropost_id: params[:react][:micropost_id])
   end
 end
