@@ -9,6 +9,3 @@ import "popper"
 import "bootstrap"
 import {} from 'jquery-ujs'
 
-
-import { Turbo } from "@hotwired/turbo-rails"
-Turbo.session.drive = false

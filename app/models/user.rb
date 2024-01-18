@@ -4,6 +4,9 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
+  has_many :remembers, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  scope :all_except, -> (user) { where.not(id: user) }
   before_save :downcase_email
   before_create :create_activation_digest
   has_many :reacts, dependent: :destroy

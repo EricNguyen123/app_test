@@ -1,0 +1,6 @@
+<% if @single_room && @single_room.title == chat_room.title%>
+  <% isActive =  'active' %>
+<% else %>
+  <% isActive = '' %>
+<% end %>
+<%= link_to chat_room.title, chat_room, class:'list-group-item room_list_item ' + isActive %>

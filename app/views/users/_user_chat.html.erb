@@ -1,0 +1,11 @@
+<% user_chats.each do |user_chat|%>
+  <% if @single_room && @single_room.remembers?(@single_room, user_chat) %>
+    <% isActive =  'active' %>
+  <% else %>
+    <% isActive = '' %>
+  <% end %>
+  <li class="list-group-item d-flex align-items-center user_list_item <%= isActive %>">
+    <%= gravatar_for user_chat, size: 20 %> 
+    <%= link_to user_chat.email, user_chat, class:'mr-auto username' %>
+  </li>
+<% end %>
