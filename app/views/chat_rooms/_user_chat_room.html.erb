@@ -1,0 +1,11 @@
+<% users.each do |user| %>
+  <% if @single_room && @single_room.participant?(@single_room, user) %>
+    <% isActive =  'active' %>
+  <% else %>
+    <% isActive = '' %>
+  <% end %>
+  <li class="list-group-item d-flex align-items-center user_list_item <%= isActive %>">
+    <%= gravatar_for user, size: 20 %> 
+    <%= link_to user.email, user, class:'mr-auto username' %>
+  </li>
+<% end %>
