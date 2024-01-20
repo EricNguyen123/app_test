@@ -6,9 +6,6 @@
   <% end %>
   <li class="list-group-item d-flex align-items-center user_list_item <%= isActive %>">
     <%= gravatar_for user_chat, size: 20 %> 
-    <%= link_to user_chat.name, user_chat, class:'mr-auto username' %>
-    <div class="add-user" id="add-user-<%= user_chat.id %>">
-      <span class="add-name">add</span>
-    </div>
+    <%= link_to user_chat.name, '/user_chat/' + user_chat.id.to_s, class:'mr-auto username' %>
   </li>
 <% end %>

@@ -28,7 +28,27 @@ class ChatRoomsController < ApplicationController
     redirect_to chat_rooms_path || root_url
   end
 
+  def create_chat_room_user
+    @user = User.find(params[:id])
+    show_users_and_rooms
+    @chat_room_name = get_name(@user, current_user)
+    @single_room = ChatRoom.where(title: @chat_room_name).first || create_chat_user1_user2(@user, @chat_room_name)
+    show_message
+    render 'index'
+  end
+
   private
+  def create_chat_user1_user2(user, chat_room_name)
+    single_room = ChatRoom.create(title: chat_room_name)
+    Remember.create(user_id: current_user.id, chat_room_id: single_room.id)
+    Remember.create(user_id: user.id, chat_room_id: single_room.id)
+    single_room
+  end
+
+  def get_name(user1, user2)
+    users = [user1, user2].sort
+    "private_#{users[0].id}_#{users[1].id}"
+  end
 
   def find_chat_room
     @chat_room = ChatRoom.find(params[:id])
@@ -51,6 +71,6 @@ class ChatRoomsController < ApplicationController
   end
 
   def find_all_chat_room
-    chat_rooms = ChatRoom.where(id: current_user.remembers) 
+    chat_rooms = ChatRoom.where(id: current_user.remembers).where.not("title LIKE ?", 'private_%')
   end
 end

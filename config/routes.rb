@@ -38,5 +38,5 @@ Rails.application.routes.draw do
   resources :chat_rooms do
     resources :messages
   end
-  
+  get '/user_chat/:id', to: 'chat_rooms#create_chat_room_user'
 end
