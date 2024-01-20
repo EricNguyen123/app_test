@@ -20,12 +20,14 @@ class ChatRoomsController < ApplicationController
 
   def destroy
     begin
-      @chat_room.destroy!
-      flash[:success] = 'Chat Room deleted'
+      @chat_room.destroy
+      respond_to do |format|
+        format.turbo_stream
+      end
     rescue ActiveRecord::RecordNotDestroyed
       flash[:error] = 'Chat Room could not be deleted'
+      redirect_to chat_rooms_path || root_url
     end
-    redirect_to chat_rooms_path || root_url
   end
 
   def create_chat_room_user
@@ -71,6 +73,8 @@ class ChatRoomsController < ApplicationController
   end
 
   def find_all_chat_room
-    chat_rooms = ChatRoom.where(id: current_user.remembers).where.not("title LIKE ?", 'private_%')
+    current_user.remembers.map do |remember|
+      ChatRoom.find(remember.chat_room_id)
+    end.reject { |chat_room| chat_room.title.start_with?('private_') }
   end
 end

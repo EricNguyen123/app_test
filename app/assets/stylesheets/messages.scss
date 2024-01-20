@@ -1,0 +1,50 @@
+$color-bg-msg: #f9f9f9;
+$color-bg-msg-cur-user: #bfd6ea;
+
+.msg-form {
+  margin-top: 10px;
+}
+
+.msg-li {
+  list-style: none;
+  width: 100%;
+  margin: 5px 0px;
+  .cont-msg-box {
+    width: max-content;
+    min-width: 200px;
+    padding: 3px 15px;
+    border-radius: 8px;
+    background-color: $color-bg-msg;
+  }
+}
+
+.active-msg-current-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.active-msg-box {
+  background-color: $color-bg-msg-cur-user !important;
+}
+
+.active-none {
+  display: none;
+}
+
+.active-display-del {
+  display: flex !important;
+}
+
+.footer-msg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+  .timestamp{
+    margin-right: 25px;
+  }
+}
+
+.active {
+  background-color: $color-bg-msg-cur-user !important;
+}

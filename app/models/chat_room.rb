@@ -2,7 +2,8 @@ class ChatRoom < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :remembers, dependent: :destroy
   validates :title, presence: true
-  after_create_commit { broadcast_append_to 'chat_rooms' }
+  after_create_commit { broadcast_append_to('chat_rooms') }
+  after_destroy_commit { broadcast_remove_to('chat_rooms') }
 
 
   def remembers?(chat_room, user)

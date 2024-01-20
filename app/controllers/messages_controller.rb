@@ -8,12 +8,14 @@ class MessagesController < ApplicationController
 
   def destroy
     begin
-      @message.destroy!
-      flash[:success] = 'Message deleted'
+      @message.destroy
+      respond_to do |format|
+        format.turbo_stream
+      end
     rescue ActiveRecord::RecordNotDestroyed
       flash[:error] = 'Message could not be deleted'
+      redirect_to request.referrer || root_url
     end
-    redirect_to request.referrer || root_url
   end
 
   private

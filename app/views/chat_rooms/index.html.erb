@@ -1,4 +1,4 @@
-<div id="chatroom_container" class="row bg-dark text-light">
+<div id="chatroom_container" class="row bg-dark text-light" data-user="<%= current_user.id %>">
   <div id="side_panel" class="col-md-4 col-sm-4">
     <h5> Hi <%= @current_user.name %> </h5>
     <h4> Users </h4>
@@ -27,9 +27,11 @@
         <h4 class="text-center">
           <%= @user&.name || @single_room.title %>
         </h4>
-        <%= turbo_stream_from @single_room%>
-        <div id="messages" data-controller="scroll">
-          <%= render @messages %>
+        <div class="box-msg" data-controller="scroll">
+          <%= turbo_stream_from 'messages' %>
+          <div id="messages" class="item-msg">
+            <%= render partial:'messages/message', collection: @messages, as: :message %>
+          </div>
         </div>
         <%= render partial: 'layouts/new_message_form' %>
       </div>
