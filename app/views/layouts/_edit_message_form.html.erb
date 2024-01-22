@@ -1,0 +1,6 @@
+<div class="form-group msg-form">
+  <%= form_with( url: "/chat_rooms/#{message.chat_room_id}/messages/#{message.id}", remote: true, class: "d-flex form-edit-msg", id: "form-edit-#{message.id}", method: :patch) do |f| %>
+    <%= f.text_field :message, value: message.message, id: 'chat-text', class: "form-control msg-content input-form-msg", autocomplete: 'off' %>
+    <%= f.submit "Update", class: "btn btn-primary btn-msg-chat" %>
+  <% end %>
+</div>

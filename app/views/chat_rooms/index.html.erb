@@ -27,9 +27,9 @@
         <h4 class="text-center">
           <%= @user&.name || @single_room.title %>
         </h4>
-        <div class="box-msg" data-controller="scroll">
-          <%= turbo_stream_from 'messages' %>
-          <div id="messages" class="item-msg">
+        <div class="box-msg msg-box-room" id="box-msg" data-controller="scroll">
+          <div id="messages" class="item-msg" data-chat-room-id="<%= @single_room.id %>">
+            <%= turbo_stream_from @single_room %>
             <%= render partial:'messages/message', collection: @messages, as: :message %>
           </div>
         </div>

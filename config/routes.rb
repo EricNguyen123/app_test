@@ -39,4 +39,6 @@ Rails.application.routes.draw do
     resources :messages
   end
   get '/user_chat/:id', to: 'chat_rooms#create_chat_room_user'
+  post '/add_user/:user_id/:chat_room_id', to: 'chat_rooms#add_room_for_user'
+  get '/add_confirm/:id', to: 'chat_rooms#add_confirm'
 end

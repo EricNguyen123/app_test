@@ -1,5 +1,6 @@
 $color-bg-msg: #f9f9f9;
 $color-bg-msg-cur-user: #bfd6ea;
+$color-btn-option-cmt: #4376a6;
 
 .msg-form {
   margin-top: 10px;
@@ -9,12 +10,20 @@ $color-bg-msg-cur-user: #bfd6ea;
   list-style: none;
   width: 100%;
   margin: 5px 0px;
+  .msg-box-in-li {
+    flex-direction: column;
+  }
+
   .cont-msg-box {
     width: max-content;
     min-width: 200px;
     padding: 3px 15px;
     border-radius: 8px;
     background-color: $color-bg-msg;
+  }
+
+  .box-form-edit-msg, .msg-form {
+    width: 100%;
   }
 }
 
@@ -31,7 +40,7 @@ $color-bg-msg-cur-user: #bfd6ea;
   display: none;
 }
 
-.active-display-del {
+.active-display-del, .active-display-add-room {
   display: flex !important;
 }
 
@@ -47,4 +56,36 @@ $color-bg-msg-cur-user: #bfd6ea;
 
 .active {
   background-color: $color-bg-msg-cur-user !important;
+}
+
+.add-room {
+  display: none;
+}
+
+.btn-content-msg, .label-btn-chat-room {
+  margin-left: 10px;
+  color: $color-btn-option-cmt;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.room-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  .btn-room-option {
+    display: flex;
+  }
+}
+
+.user-room-btn {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.msg-box-room {
+  width: 100%;
+  height: 500px !important;
+  overflow-y: overlay !important;
 }

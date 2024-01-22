@@ -1,14 +1,16 @@
-<% if @single_room && @single_room.title == chat_room.title%>
+<% if @single_room && @single_room.id == chat_room.id%>
   <% isActive =  'active' %>
 <% else %>
   <% isActive = '' %>
 <% end %>
-<div class="list-group-item room_list_item <%= isActive %>" id="<%= dom_id(chat_room)%>">
+<div class="list-group-item room_list_item <%= isActive %> room-item" id="<%= dom_id(chat_room)%>">
   <%= link_to chat_room.title, chat_room, class: 'chat-room-' + chat_room.id.to_s %>
-  <div class="chat-room-delete" id="chat-room-<%= chat_room.id %>">
-    <%= link_to "Delete", chat_room, data: { turbo_method: :delete, confirm: "You sure?" } %>
-  </div>
-  <div class="chat-room-add" id="chat-room-add-<%= chat_room.id %>">
-    <span class="label-btn-chat-room">Add</span>
+  <div class="btn-room-option">
+    <div class="chat-room-delete" id="chat-room-<%= chat_room.id %>">
+      <%= link_to "Delete", chat_room, data: { turbo_method: :delete, confirm: "You sure?" } %>
+    </div>
+    <div class="chat-room-add" id="chat-room-add-<%= chat_room.id %>">
+      <span class="label-btn-chat-room">Add</span>
+    </div>
   </div>
 </div>

@@ -1,9 +1,15 @@
 class MessagesController < ApplicationController
-  before_action :logged_in_user, only: %i[create destroy]
-  before_action :find_message, only: %i[destroy]
+  before_action :logged_in_user, only: %i[create update destroy]
+  before_action :find_message, only: %i[update destroy]
   
   def create
     @message = current_user.messages.create(message: msg_params[:message], chat_room_id: params[:chat_room_id])
+  end
+
+  def update
+    return unless @message.update(message: params[:message])
+
+    render json: { success: true }
   end
 
   def destroy

@@ -1,6 +1,6 @@
 class ChatRoomsController < ApplicationController
   before_action :logged_in_user, only: %i[index create show destroy]
-  before_action :find_chat_room, only: %i[destroy]
+  before_action :find_chat_room, only: %i[destroy add_confirm]
 
   def index
     show_users_and_rooms
@@ -8,7 +8,7 @@ class ChatRoomsController < ApplicationController
 
   def create
     @chat_room = ChatRoom.create(title: params['chat_room']['title'])
-    Remember.create(user_id: current_user.id, chat_room_id: @chat_room.id)
+    @remember = Remember.create(user_id: current_user.id, chat_room_id: @chat_room.id)
   end
 
   def show
@@ -37,6 +37,22 @@ class ChatRoomsController < ApplicationController
     @single_room = ChatRoom.where(title: @chat_room_name).first || create_chat_user1_user2(@user, @chat_room_name)
     show_message
     render 'index'
+  end
+
+  def add_room_for_user
+    @remember = Remember.create(user_id: params[:user_id], chat_room_id: params[:chat_room_id])
+    if @remember.save
+      render json: { success: true }
+    else
+      render json: { success: false }
+    end
+  end
+
+  def add_confirm
+    @user_chat_rooms = @chat_room.remembers
+    if @user_chat_rooms
+      render json: { success: true, user_chat_rooms: @user_chat_rooms }
+    end
   end
 
   private

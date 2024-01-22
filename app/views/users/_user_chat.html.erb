@@ -4,8 +4,13 @@
   <% else %>
     <% isActive = '' %>
   <% end %>
-  <li class="list-group-item d-flex align-items-center user_list_item <%= isActive %>">
-    <%= gravatar_for user_chat, size: 20 %> 
-    <%= link_to user_chat.name, '/user_chat/' + user_chat.id.to_s, class:'mr-auto username' %>
+  <li class="list-group-item d-flex align-items-center user_list_item <%= isActive %> user-room-btn" id="room-user-<%= user_chat.id %>">
+    <div class="name-user-room">
+      <%= gravatar_for user_chat, size: 20 %> 
+      <%= link_to user_chat.name, '/user_chat/' + user_chat.id.to_s, class:'mr-auto username' %>
+    </div>
+    <div class="add-room" id="add-room-user-<%= user_chat.id %>">
+      <span class="label-btn-chat-room">Add</span>
+    </div>
   </li>
 <% end %>
