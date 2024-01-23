@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :message do
-    message { "MyString" }
+    message { Faker::Markdown.emphasis }
   end
 end

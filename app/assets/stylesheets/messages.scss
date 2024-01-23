@@ -1,6 +1,7 @@
 $color-bg-msg: #f9f9f9;
 $color-bg-msg-cur-user: #bfd6ea;
 $color-btn-option-cmt: #4376a6;
+$color-scroll-bar: rgba(255, 255, 255, 0.3);
 
 .msg-form {
   margin-top: 10px;
@@ -88,4 +89,19 @@ $color-btn-option-cmt: #4376a6;
   width: 100%;
   height: 500px !important;
   overflow-y: overlay !important;
+  &::-webkit-scrollbar {
+    background-color: $color-scroll-bar;
+    border-radius: 8px;
+    width: 5px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px $color-scroll-bar;
+    background-color: $color-scroll-bar;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-scroll-bar;
+    border-radius: 10px;
+  }
 }

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Chat_room
 class ChatRoomsController < ApplicationController
   before_action :logged_in_user, only: %i[index create show destroy]
   before_action :find_chat_room, only: %i[destroy add_confirm]
@@ -9,6 +12,9 @@ class ChatRoomsController < ApplicationController
   def create
     @chat_room = ChatRoom.create(title: params['chat_room']['title'])
     @remember = Remember.create(user_id: current_user.id, chat_room_id: @chat_room.id)
+  rescue ActiveRecord::RecordNotDestroyed
+    flash[:error] = 'Chat Room could not be created'
+    redirect_to chat_rooms_path || root_url
   end
 
   def show
@@ -19,15 +25,13 @@ class ChatRoomsController < ApplicationController
   end
 
   def destroy
-    begin
-      @chat_room.destroy
-      respond_to do |format|
-        format.turbo_stream
-      end
-    rescue ActiveRecord::RecordNotDestroyed
-      flash[:error] = 'Chat Room could not be deleted'
-      redirect_to chat_rooms_path || root_url
+    @chat_room.destroy
+    respond_to do |format|
+      format.turbo_stream { head :ok }
     end
+  rescue ActiveRecord::RecordNotDestroyed
+    flash[:error] = 'Chat Room could not be deleted'
+    redirect_to chat_rooms_path || root_url
   end
 
   def create_chat_room_user
@@ -52,10 +56,13 @@ class ChatRoomsController < ApplicationController
     @user_chat_rooms = @chat_room.remembers
     if @user_chat_rooms
       render json: { success: true, user_chat_rooms: @user_chat_rooms }
+    else
+      render json: { success: false }
     end
   end
 
   private
+
   def create_chat_user1_user2(user, chat_room_name)
     single_room = ChatRoom.create(title: chat_room_name)
     Remember.create(user_id: current_user.id, chat_room_id: single_room.id)
@@ -85,7 +92,7 @@ class ChatRoomsController < ApplicationController
 
   def find_users
     all_users = current_user.following + current_user.followers
-    users = all_users.uniq - [current_user] if all_users.uniq
+    all_users.uniq - [current_user] if all_users.uniq
   end
 
   def find_all_chat_room

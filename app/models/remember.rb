@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# remmeber
 class Remember < ApplicationRecord
   belongs_to :user
   belongs_to :chat_room

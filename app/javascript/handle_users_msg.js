@@ -1,4 +1,6 @@
 function handle_msg_change() {
+  var messagesContainer = $('#box-msg');
+  messagesContainer.scrollTop(messagesContainer.prop('scrollHeight'));
   let user = $('#chatroom_container').data('user');
 
   if (user) {
@@ -19,7 +21,8 @@ $(document).on('turbo:load', function() {
         handle_msg_change()
       }
       else if (mutation.type == 'attributes') {
-        console.log('The ' + mutation.attributeName + ' attribute was modified.');
+        var messagesContainer = $('#box-msg');
+        messagesContainer.scrollTop(messagesContainer.prop('scrollHeight'));
       }
     }
   };

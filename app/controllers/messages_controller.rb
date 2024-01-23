@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# message
 class MessagesController < ApplicationController
   before_action :logged_in_user, only: %i[create update destroy]
   before_action :find_message, only: %i[update destroy]
-  
+
   def create
     @message = current_user.messages.create(message: msg_params[:message], chat_room_id: params[:chat_room_id])
   end
@@ -13,15 +16,11 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    begin
-      @message.destroy
-      respond_to do |format|
-        format.turbo_stream
-      end
-    rescue ActiveRecord::RecordNotDestroyed
-      flash[:error] = 'Message could not be deleted'
-      redirect_to request.referrer || root_url
-    end
+    @message.destroy
+    respond_to(&:turbo_stream)
+  rescue ActiveRecord::RecordNotDestroyed
+    flash[:error] = 'Message could not be deleted'
+    redirect_to request.referrer || root_url
   end
 
   private
