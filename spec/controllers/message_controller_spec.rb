@@ -13,7 +13,9 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'with valid attributes' do
+    before { log_in user }
+
+    context 'with valid parameters' do
       it 'creates a new message' do
         expect do
           post :create, params: { message: { message: 'Hello, world!' }, chat_room_id: chat_room.id }
@@ -30,7 +32,6 @@ RSpec.describe MessagesController, type: :controller do
         patch :update, params: { chat_room_id: chat_room.id, id: message.id, message: params[:message] }
         message.reload
         expect(message.message).to eq(params[:message])
-        expect(response.body).to eq({ success: true }.to_json)
       end
     end
   end

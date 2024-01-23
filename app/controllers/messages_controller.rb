@@ -7,12 +7,13 @@ class MessagesController < ApplicationController
 
   def create
     @message = current_user.messages.create(message: msg_params[:message], chat_room_id: params[:chat_room_id])
+  rescue ActiveRecord::RecordInvalid
+    flash[:error] = 'Message could not be created'
+    redirect_to request.referrer || root_url
   end
 
   def update
-    return unless @message.update(message: params[:message])
-
-    render json: { success: true }
+    redirect_to request.referrer || root_url unless @message.update(message: params[:message])
   end
 
   def destroy

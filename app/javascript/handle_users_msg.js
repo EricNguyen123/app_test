@@ -38,36 +38,6 @@ $(document).on('click', '.btn-edit-msg', function() {
   $form.find('.box-form-edit-msg').addClass('active-display-del');
 });
 
-
-$(document).on('submit', '.form-edit-msg', function(e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  const msg = $(this).attr('id');
-  const parts = msg.split("-");
-  const msgID = parts[parts.length - 1];
-  const roomID = $(this).closest('.item-msg').data('chat-room-id');
-  const value = $(this).closest('.msg-form').find('.msg-content').val();
-  console.log(msgID,roomID, value )
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  
-  $.ajax({
-    url: '/chat_rooms/' + roomID + '/messages/' + msgID,
-    type: 'PATCH',
-    data: formData,
-    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-    dataType: 'json',
-    success: function(response) {},
-    error: function(error) {
-      console.log(error);
-    }
-  });
-})
-
-
 $(document).on('DOMContentLoaded', function() {
   var messagesContainer = $('#box-msg');
   function scrollDown() {
