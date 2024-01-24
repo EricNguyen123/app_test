@@ -2,7 +2,6 @@
   <div id="side_panel" class="col-md-4 col-sm-4">
     <h5> Hi <%= @current_user.name %> </h5>
     <h4> Users </h4>
-    <%= turbo_stream_from "users" %>
     <div id="users">
       <ul class="list-group">
         <% if @user_chats %>
@@ -14,7 +13,6 @@
     </div>
     <h4> Rooms </h4>
     <%= render partial: "layouts/new_room_form" %>
-    <%= turbo_stream_from "chat_rooms" %>
     <div id="chat_rooms">
       <ul class="list-group">
         <%= render @chat_rooms %>
@@ -29,7 +27,6 @@
         </h4>
         <div class="box-msg msg-box-room" id="box-msg" data-controller="scroll">
           <div id="messages" class="item-msg" data-chat-room-id="<%= @single_room.id %>">
-            <%= turbo_stream_from @single_room %>
             <%= render partial:'messages/message', collection: @messages, as: :message %>
           </div>
         </div>

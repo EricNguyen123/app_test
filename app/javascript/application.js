@@ -7,5 +7,6 @@ import "jquery"
 import "jquery_ujs"
 import "popper"
 import "bootstrap"
-import {} from 'jquery-ujs'
+import 'jquery-ujs'
 
+import "./channels"
