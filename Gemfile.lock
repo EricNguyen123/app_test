@@ -118,6 +118,12 @@ GEM
       will_paginate
     builder (3.2.4)
     byebug (11.0.1)
+    cable_ready (5.0.3)
+      actionpack (>= 5.2)
+      actionview (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      thread-local (>= 1.1.0)
     capybara (3.37.1)
       addressable
       matrix
@@ -184,6 +190,10 @@ GEM
       guard-compat (~> 1.2)
       minitest (>= 3.0)
     hashie (5.0.0)
+    hotwire-rails (0.1.3)
+      rails (>= 6.0.0)
+      stimulus-rails
+      turbo-rails
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -294,6 +304,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (3.0.8)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-protection (3.0.6)
       rack
     rack-session (2.0.0)
@@ -342,6 +354,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.6.1)
       psych (>= 4.0.0)
+    redis (4.8.1)
     regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
@@ -411,6 +424,7 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.0)
     thor (1.3.0)
+    thread-local (1.1.0)
     tilt (2.3.0)
     timeout (0.4.1)
     turbo-rails (1.5.0)
@@ -447,6 +461,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  actioncable (~> 7.0)
   active_storage_validations (~> 1.1, >= 1.1.3)
   aws-sdk-s3 (~> 1.141)
   bcrypt (= 3.1.13)
@@ -455,6 +470,7 @@ DEPENDENCIES
   bootstrap-sass (= 3.4.1)
   bootstrap-will_paginate (~> 1.0)
   byebug (= 11.0.1)
+  cable_ready
   capybara (= 3.37.1)
   debug
   devise (~> 4.9, >= 4.9.2)
@@ -464,6 +480,7 @@ DEPENDENCIES
   faker
   guard (= 2.18.0)
   guard-minitest (= 2.4.6)
+  hotwire-rails (~> 0.1.3)
   image_processing (~> 1.12, >= 1.12.2)
   importmap-rails
   jbuilder
@@ -480,8 +497,10 @@ DEPENDENCIES
   pg (= 1.3.5)
   pry-rails
   puma (~> 6.0)
+  rack-cors (~> 1.1, >= 1.1.1)
   rails (~> 7.1.2)
   rails-controller-testing (= 1.0.5)
+  redis (~> 4.0)
   rspec-rails
   sassc-rails
   selenium-webdriver (= 4.2.0)
