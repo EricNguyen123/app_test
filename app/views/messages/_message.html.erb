@@ -6,7 +6,7 @@
           <%= gravatar_for message.user, size: 20 %> 
           <h6 class="name"> <%= message.user.name %> </h6>
         </div>
-        <%= message.message %>
+        <span class="content-msg" id="msg-cnt-id-<%= message.id %>"><%= message.message %></span>
         <div class="footer-msg">
           <span class="timestamp">
             Send <%= time_ago_in_words(message.created_at) %> ago. 

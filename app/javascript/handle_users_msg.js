@@ -8,6 +8,7 @@ function handle_msg_change() {
     $('.cont-' + user).addClass('active-msg-box');
     $('.message-delete-' + user).addClass('active-display-del');
     $('.btn-edit-msg-' + user).addClass('active-display-del');
+    $('.box-form-edit-msg').removeClass('active-display-del');
   }
 }
 
@@ -45,9 +46,6 @@ $(document).on('DOMContentLoaded', function() {
       scrollTop: messagesContainer.prop('scrollHeight')
     }, 500);
   }
-  $(document).on('turbo:after-stream-append', function() {
-    scrollDown();
-  });
   scrollDown();
 });
   

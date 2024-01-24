@@ -190,11 +190,21 @@ GEM
       guard-compat (~> 1.2)
       minitest (>= 3.0)
     hashie (5.0.0)
+    hotwire-rails (0.1.3)
+      rails (>= 6.0.0)
+      stimulus-rails
+      turbo-rails
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
+    importmap (0.1.0)
+      activesupport
+      memoist
+      rainbow
+      thor
+      zeitwerk
     importmap-rails (1.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -228,6 +238,7 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
+    memoist (0.16.2)
     method_source (1.0.0)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
@@ -344,6 +355,7 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
+    rainbow (3.1.1)
     rake (13.1.0)
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
@@ -476,7 +488,9 @@ DEPENDENCIES
   faker
   guard (= 2.18.0)
   guard-minitest (= 2.4.6)
+  hotwire-rails (~> 0.1.3)
   image_processing (~> 1.12, >= 1.12.2)
+  importmap (~> 0.1.0)
   importmap-rails
   jbuilder
   jquery-rails

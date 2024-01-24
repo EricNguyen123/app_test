@@ -1,9 +1,14 @@
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "chat_room_channel"
+    chat_room = params[:chat_room_id]
+    if chat_room
+      stream_from "chat_room_channel_#{ chat_room }"
+    else
+      reject
+    end
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    stop_all_streams
   end
 end
