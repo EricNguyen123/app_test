@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+# chatromchannels
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
     chat_room = params[:chat_room_id]
     if chat_room
-      stream_from "chat_room_channel_#{ chat_room }"
+      stream_from "chat_room_channel_#{chat_room}"
     else
       reject
     end

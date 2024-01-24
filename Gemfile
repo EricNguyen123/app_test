@@ -125,10 +125,10 @@ gem 'omniauth-facebook'
 gem 'omniauth-github', '~> 2.0.0'
 gem 'omniauth-google-oauth2'
 
-gem 'cable_ready'
 gem 'actioncable', '~> 7.0'
+gem 'cable_ready'
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 
-gem "importmap", "~> 0.1.0"
+gem 'importmap', '~> 0.1.0'
 
-gem "hotwire-rails", "~> 0.1.3"
+gem 'hotwire-rails', '~> 0.1.3'

@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   def create
     @message = current_user.messages.create(message: msg_params[:message], chat_room_id: params[:chat_room_id])
     html = render(partial: 'messages/message', locals: { message: @message })
-    ActionCable.server.broadcast("chat_room_channel_#{ params[:chat_room_id] }", { html: html, action: 'create' })
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", { html:, action: 'create' })
   rescue ActiveRecord::RecordInvalid
     flash[:error] = 'Message could not be created'
     redirect_to request.referrer || root_url
@@ -17,12 +17,12 @@ class MessagesController < ApplicationController
   def update
     redirect_to request.referrer || root_url unless @message.update(message: params[:message])
     html = render(partial: 'messages/update_msg', locals: { message: @message })
-    ActionCable.server.broadcast("chat_room_channel_#{ params[:chat_room_id] }", { html: html, action: 'update', msg_id: @message.id })
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", { html:, action: 'update', msg_id: @message.id })
   end
 
   def destroy
     @message.destroy
-    ActionCable.server.broadcast("chat_room_channel_#{ params[:chat_room_id] }", { action: 'destroy', msg_id: @message.id })
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", { action: 'destroy', msg_id: @message.id })
   rescue ActiveRecord::RecordNotDestroyed
     flash[:error] = 'Message could not be deleted'
     redirect_to request.referrer || root_url
