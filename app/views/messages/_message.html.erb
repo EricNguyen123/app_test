@@ -12,7 +12,7 @@
             Send <%= time_ago_in_words(message.created_at) %> ago. 
           </span>
           <div class="message-delete message-delete-<%= message.user.id %> active-none" id="message-<%= message.id %>">
-            <%= link_to "Delete", chat_room_message_path(message.chat_room_id, message.id), data: { turbo_method: :delete, confirm: "You sure?" } %>
+            <%= link_to "Delete", chat_room_message_path(message.chat_room_id, message.id), data: { turbo_method: :delete } %>
           </div>
           <div class="btn-edit-msg btn-edit-msg-<%= message.user.id %> active-none" id="btn-edit-msg-<%= message.user.id %>">
             <span class="btn-content-msg">Edit</span>

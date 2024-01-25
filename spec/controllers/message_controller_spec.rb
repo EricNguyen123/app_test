@@ -12,14 +12,40 @@ RSpec.describe MessagesController, type: :controller do
     allow(controller).to receive(:logged_in_user).and_return(true)
   end
 
-  describe 'POST #create' do
-    before { log_in user }
+  before do
+    allow(controller).to receive(:current_user).and_return(user)
+  end
 
-    context 'with valid parameters' do
-      it 'creates a new message' do
+  describe 'POST #create' do
+    context 'when the message is valid' do
+      it 'creates a new message and enqueues a job' do
         expect do
           post :create, params: { message: { message: 'Hello, world!' }, chat_room_id: chat_room.id }
         end.to change(Message, :count).by(1)
+                                      .and have_enqueued_job(CreateMessageJob)
+      end
+    end
+
+    context 'when the message is invalid' do
+      it 'does not create a message' do
+        allow_any_instance_of(Message).to receive(:save).and_raise(ActiveRecord::RecordInvalid)
+        expect do
+          post :create, params: { message: { message: 'Hello, world!' }, chat_room_id: chat_room.id }
+        end.not_to change(Message, :count)
+      end
+
+      it 'does not enqueue a job' do
+        allow_any_instance_of(Message).to receive(:save).and_raise(ActiveRecord::RecordInvalid)
+        expect do
+          post :create, params: { message: { message: 'Hello, world!' }, chat_room_id: chat_room.id }
+        end.not_to have_enqueued_job(CreateMessageJob)
+      end
+
+      it 'sets a flash error and redirects' do
+        allow_any_instance_of(Message).to receive(:save).and_raise(ActiveRecord::RecordInvalid)
+        post :create, params: { message: { message: 'Hello, world!' }, chat_room_id: chat_room.id }
+        expect(flash[:error]).to eq('Message could not be created')
+        expect(response).to redirect_to(request.referrer || root_url)
       end
     end
   end
@@ -27,11 +53,26 @@ RSpec.describe MessagesController, type: :controller do
   describe 'PATCH #update' do
     context 'when the update is successful' do
       let(:params) { { message: 'New message content' } }
+      it 'updates the message and enqueues a job' do
+        expect do
+          patch :update, params: { chat_room_id: chat_room.id, id: message.id, message: params[:message] }
+        end.to have_enqueued_job(UpdateMessageJob).with(message)
 
-      it 'updates the message' do
-        patch :update, params: { chat_room_id: chat_room.id, id: message.id, message: params[:message] }
         message.reload
         expect(message.message).to eq(params[:message])
+      end
+    end
+
+    context 'when the update fails' do
+      let(:params) { { message: 'New message content' } }
+      it 'does not update the message or enqueue a job' do
+        allow_any_instance_of(Message).to receive(:update).and_return(false)
+
+        expect do
+          patch :update, params: { chat_room_id: chat_room.id, id: message.id, message: params[:message] }
+        end.not_to have_enqueued_job(UpdateMessageJob)
+
+        expect(response).to redirect_to(request.referrer || root_url)
       end
     end
   end
