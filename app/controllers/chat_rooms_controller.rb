@@ -43,8 +43,8 @@ class ChatRoomsController < ApplicationController
   end
 
   def add_room_for_user
-    @remember = Remember.create(user_id: params[:user_id], chat_room_id: params[:chat_room_id])
-    if @remember.save
+    remember = Remember.new(user_id: params[:user_id], chat_room_id: params[:chat_room_id])
+    if remember.save
       render json: { success: true }
     else
       render json: { success: false }

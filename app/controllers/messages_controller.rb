@@ -6,8 +6,8 @@ class MessagesController < ApplicationController
   before_action :find_message, only: %i[update destroy]
 
   def create
-    @message = current_user.messages.create(message: msg_params[:message], chat_room_id: params[:chat_room_id])
-    CreateMessageJob.perform_later(@message) if @message.save
+    @message = current_user.messages.build(message: msg_params[:message], chat_room_id: params[:chat_room_id])
+    CreateMessageJob.perform_now(@message) if @message.save
   rescue ActiveRecord::RecordInvalid
     flash[:error] = 'Message could not be created'
     redirect_to request.referrer || root_url
