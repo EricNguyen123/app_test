@@ -28,13 +28,13 @@ RSpec.describe ChatRoomsController, type: :controller do
       it 'creates a new chat room and remember record' do
         expect do
           post :create, params: { chat_room: { title: 'myString' } }
-        end.to change(ChatRoom, :count).by(1).and change(Remember, :count).by(1)
+        end.to change(ChatRoom, :count).by(1).and change(RememberRoom, :count).by(1)
       end
     end
 
     context 'with invalid parameters' do
       it 'renders the index template with an error message' do
-        allow(ChatRoom).to receive(:create).and_raise(ActiveRecord::RecordNotDestroyed)
+        allow(ChatRoom).to receive(:create).and_raise(ActiveRecord::RecordInvalid)
 
         post :create, params: { chat_room: { title: 'Invalid Room' } }
 
@@ -64,7 +64,6 @@ RSpec.describe ChatRoomsController, type: :controller do
       it 'returns a successful response' do
         delete :destroy, params: { id: chat_room.id }, format: :turbo_stream
         expect(ChatRoom.find_by(id: chat_room.id)).to be_nil
-        expect(response).to have_http_status(:ok)
       end
     end
 
@@ -94,9 +93,9 @@ RSpec.describe ChatRoomsController, type: :controller do
   describe 'POST #add_room_for_user' do
     context 'when remember is successfully created' do
       before do
-        remember = double('Remember')
+        remember = double('RememberRoom')
         allow(remember).to receive(:save).and_return(true)
-        allow(Remember).to receive(:create).and_return(remember)
+        allow(RememberRoom).to receive(:create).and_return(remember)
       end
 
       it 'returns a successful response' do
@@ -106,13 +105,9 @@ RSpec.describe ChatRoomsController, type: :controller do
     end
 
     context 'when remember cannot be created' do
-      before do
-        remember = double('Remember')
-        allow(remember).to receive(:save).and_return(false)
-        allow(Remember).to receive(:create).and_return(remember)
-      end
 
       it 'returns an unsuccessful response' do
+        allow_any_instance_of(RememberRoom).to receive(:save).and_return(false)
         post :add_room_for_user, params: { user_id: user.id, chat_room_id: chat_room.id }
         expect(response.body).to eq({ success: false }.to_json)
       end
@@ -120,9 +115,9 @@ RSpec.describe ChatRoomsController, type: :controller do
   end
 
   describe '#add_confirm' do
-    context 'when chat room has remembers' do
+    context 'when chat room has remember_rooms' do
       before do
-        allow(chat_room).to receive(:remembers).and_return(true)
+        allow(chat_room).to receive(:remember_rooms).and_return(true)
         get :add_confirm, params: { id: chat_room.id }
       end
 
@@ -131,10 +126,10 @@ RSpec.describe ChatRoomsController, type: :controller do
       end
     end
 
-    context 'when chat room has no remembers' do
+    context 'when chat room has no remember_rooms' do
       before do
         allow(ChatRoom).to receive(:find).and_return(chat_room)
-        allow(chat_room).to receive(:remembers).and_return(nil)
+        allow(chat_room).to receive(:remember_rooms).and_return(nil)
         get :add_confirm, params: { id: chat_room.id }
       end
 
@@ -156,11 +151,11 @@ RSpec.describe ChatRoomsController, type: :controller do
 
   let(:chat_room1) { FactoryBot.create(:chat_room, title: 'private_chat') }
   let(:chat_room2) { FactoryBot.create(:chat_room, title: 'public_chat') }
-  let(:remember1) { FactoryBot.create(:remember, user:, chat_room: chat_room1) }
-  let(:remember2) { FactoryBot.create(:remember, user:, chat_room: chat_room2) }
+  let(:remember1) { FactoryBot.create(:remember_room, user:, chat_room: chat_room1) }
+  let(:remember2) { FactoryBot.create(:remember_room, user:, chat_room: chat_room2) }
   before do
     allow(controller).to receive(:current_user).and_return(user)
-    allow(user).to receive(:remembers).and_return([remember1, remember2])
+    allow(user).to receive(:remember_rooms).and_return([remember1, remember2])
   end
 
   describe '#find_all_chat_room' do

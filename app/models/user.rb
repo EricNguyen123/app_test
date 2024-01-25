@@ -4,7 +4,7 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
-  has_many :remembers, dependent: :destroy
+  has_many :remember_rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
   scope :all_except, ->(user) { where.not(id: user) }
   before_save :downcase_email

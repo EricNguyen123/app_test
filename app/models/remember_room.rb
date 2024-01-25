@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
-# remmeber
-class Remember < ApplicationRecord
+class RememberRoom < ApplicationRecord
   belongs_to :user
   belongs_to :chat_room
   validates :user_id, presence: true

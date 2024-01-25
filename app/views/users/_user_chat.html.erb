@@ -1,5 +1,5 @@
 <% user_chats.each do |user_chat|%>
-  <% if @single_room && @single_room.remembers?(@single_room, user_chat) %>
+  <% if @single_room && @single_room.remember_rooms?(@single_room, user_chat) %>
     <% isActive =  'active' %>
   <% else %>
     <% isActive = '' %>

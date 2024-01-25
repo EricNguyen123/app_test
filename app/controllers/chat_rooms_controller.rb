@@ -11,9 +11,9 @@ class ChatRoomsController < ApplicationController
 
   def create
     @chat_room = ChatRoom.create(title: params['chat_room']['title'])
-    @remember = Remember.create(user_id: current_user.id, chat_room_id: @chat_room.id)
+    @remember = RememberRoom.create(user_id: current_user.id, chat_room_id: @chat_room.id)
     respond_to(&:js)
-  rescue ActiveRecord::RecordNotDestroyed
+  rescue ActiveRecord::RecordInvalid
     flash[:error] = 'Chat Room could not be created'
     redirect_to chat_rooms_path || root_url
   end
@@ -27,7 +27,8 @@ class ChatRoomsController < ApplicationController
 
   def destroy
     @chat_room.destroy
-    respond_to(&:js)
+    flash[:success] = 'Chat Room deleted'
+    redirect_to chat_rooms_path || root_url
   rescue ActiveRecord::RecordNotDestroyed
     flash[:error] = 'Chat Room could not be deleted'
     redirect_to chat_rooms_path || root_url
@@ -37,14 +38,14 @@ class ChatRoomsController < ApplicationController
     @user = User.find(params[:id])
     show_users_and_rooms
     @chat_room_name = get_name(@user, current_user)
-    @single_room = ChatRoom.where(title: @chat_room_name).first || create_chat_user1_user2(@user, @chat_room_name)
+    @single_room = ChatRoom.find_by(title: @chat_room_name) || create_chat_user1_user2(@user, @chat_room_name)
     show_message
     render 'index'
   end
 
   def add_room_for_user
-    remember = Remember.new(user_id: params[:user_id], chat_room_id: params[:chat_room_id])
-    if remember.save
+    @remember = RememberRoom.new(user_id: params[:user_id], chat_room_id: params[:chat_room_id])
+    if @remember.save
       render json: { success: true }
     else
       render json: { success: false }
@@ -52,7 +53,7 @@ class ChatRoomsController < ApplicationController
   end
 
   def add_confirm
-    @user_chat_rooms = @chat_room.remembers
+    @user_chat_rooms = @chat_room.remember_rooms
     if @user_chat_rooms
       render json: { success: true, user_chat_rooms: @user_chat_rooms }
     else
@@ -64,8 +65,8 @@ class ChatRoomsController < ApplicationController
 
   def create_chat_user1_user2(user, chat_room_name)
     single_room = ChatRoom.create(title: chat_room_name)
-    Remember.create(user_id: current_user.id, chat_room_id: single_room.id)
-    Remember.create(user_id: user.id, chat_room_id: single_room.id)
+    RememberRoom.create(user_id: current_user.id, chat_room_id: single_room.id)
+    RememberRoom.create(user_id: user.id, chat_room_id: single_room.id)
     single_room
   end
 
@@ -95,7 +96,7 @@ class ChatRoomsController < ApplicationController
   end
 
   def find_all_chat_room
-    current_user.remembers.map do |remember|
+    current_user.remember_rooms.map do |remember|
       ChatRoom.find(remember.chat_room_id)
     end.reject { |chat_room| chat_room.title.start_with?('private_') }
   end
