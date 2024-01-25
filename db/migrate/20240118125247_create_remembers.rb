@@ -9,6 +9,6 @@ class CreateRemembers < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
-    add_index :remembers, [:user_id, :chat_room_id], unique: true
+    add_index :remembers, %i[user_id chat_room_id], unique: true
   end
 end
