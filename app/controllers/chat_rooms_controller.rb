@@ -12,6 +12,7 @@ class ChatRoomsController < ApplicationController
   def create
     @chat_room = ChatRoom.create(title: params['chat_room']['title'])
     @remember = Remember.create(user_id: current_user.id, chat_room_id: @chat_room.id)
+    respond_to(&:js)
   rescue ActiveRecord::RecordNotDestroyed
     flash[:error] = 'Chat Room could not be created'
     redirect_to chat_rooms_path || root_url
@@ -26,9 +27,7 @@ class ChatRoomsController < ApplicationController
 
   def destroy
     @chat_room.destroy
-    respond_to do |format|
-      format.turbo_stream { head :ok }
-    end
+    respond_to(&:js)
   rescue ActiveRecord::RecordNotDestroyed
     flash[:error] = 'Chat Room could not be deleted'
     redirect_to chat_rooms_path || root_url
