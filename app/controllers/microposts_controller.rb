@@ -4,6 +4,7 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: %i[destroy update]
+  before_action :find_micropost, only: %i[show]
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
@@ -33,7 +34,15 @@ class MicropostsController < ApplicationController
     render json: { success: true, micropost: @micropost, html_content: }
   end
 
+  def show
+  end
+
   private
+
+  def find_micropost
+    @micropost = Micropost.find_by(id: params[:id])
+    redirect_to root_url if @micropost.nil?
+  end
 
   def handle_micropost_save
     return if params[:micropost][:micropost_id]

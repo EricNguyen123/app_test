@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :remember_rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
   scope :all_except, ->(user) { where.not(id: user) }
+  scope :user_yesterday, -> { where(created_at: Date.yesterday.all_day) }
   before_save :downcase_email
   before_create :create_activation_digest
   has_many :reacts, dependent: :destroy
