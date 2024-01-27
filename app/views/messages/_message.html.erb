@@ -1,0 +1,27 @@
+<li class="msg-li msg-li-<%= message.user.id %>" id="<%= dom_id(message)%>">
+  <div class="msg-box-in-li">
+    <div class="cont-<%= message.user.id %> cont-msg-box" id="cont-<%= message.user.id %>">
+      <div class="message-box msg-<%= message.user.id %> " >
+        <div class=" d-flex align-items-center">
+          <%= gravatar_for message.user, size: 20 %> 
+          <h6 class="name"> <%= message.user.name %> </h6>
+        </div>
+        <span class="content-msg" id="msg-cnt-id-<%= message.id %>"><%= message.message %></span>
+        <div class="footer-msg">
+          <span class="timestamp">
+            Send <%= time_ago_in_words(message.created_at) %> ago. 
+          </span>
+          <div class="message-delete message-delete-<%= message.user.id %> active-none" id="message-<%= message.id %>">
+            <%= link_to "Delete", chat_room_message_path(message.chat_room_id, message.id), data: { turbo_method: :delete } %>
+          </div>
+          <div class="btn-edit-msg btn-edit-msg-<%= message.user.id %> active-none" id="btn-edit-msg-<%= message.user.id %>">
+            <span class="btn-content-msg">Edit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-form-edit-msg active-none">
+      <%= render "layouts/edit_message_form", message: message %>
+    </div>
+  </div>
+</li>

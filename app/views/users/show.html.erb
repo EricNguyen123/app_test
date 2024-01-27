@@ -10,6 +10,9 @@
         <section class="stats">
             <%= render 'shared/stats' %> 
         </section>
+        <% unless current_user?(@user)%>
+            <%= render 'users/btn_messages', user_chat: @user %>
+        <% end %>
     </aside> 
     <div class="col-md-8">
         <%= render 'follow_form' if logged_in? %>

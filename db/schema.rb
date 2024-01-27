@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_115_083_430) do
+ActiveRecord::Schema[7.1].define(version: 20_240_125_072_747) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -39,6 +39,20 @@ ActiveRecord::Schema[7.1].define(version: 20_240_115_083_430) do
     t.bigint 'blob_id', null: false
     t.string 'variation_digest', null: false
     t.index %w[blob_id variation_digest], name: 'index_active_storage_variant_records_uniqueness', unique: true
+  end
+
+  create_table 'chat_rooms', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'title'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
+  create_table 'messages', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'message'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'user_id'
+    t.integer 'chat_room_id'
   end
 
   create_table 'microposts', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -68,6 +82,14 @@ ActiveRecord::Schema[7.1].define(version: 20_240_115_083_430) do
     t.index ['followed_id'], name: 'index_relationships_on_followed_id'
     t.index %w[follower_id followed_id], name: 'index_relationships_on_follower_id_and_followed_id', unique: true
     t.index ['follower_id'], name: 'index_relationships_on_follower_id'
+  end
+
+  create_table 'remember_rooms', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.integer 'user_id'
+    t.integer 'chat_room_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[user_id chat_room_id], name: 'index_remember_rooms_on_user_id_and_chat_room_id', unique: true
   end
 
   create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|

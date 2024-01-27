@@ -35,4 +35,11 @@ Rails.application.routes.draw do
   resources :password_resets, only: %i[new create edit update]
   resources :microposts, only: %i[create destroy update]
   resources :relationships, only: %i[create destroy]
+  resources :chat_rooms do
+    resources :messages
+  end
+  get '/user_chat/:id', to: 'chat_rooms#create_chat_room_user'
+  post '/add_user/:user_id/:chat_room_id', to: 'chat_rooms#add_room_for_user'
+  get '/add_confirm/:id', to: 'chat_rooms#add_confirm'
+  mount ActionCable.server, at: '/cable'
 end
