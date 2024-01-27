@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# creat daily report
 class CreateRememberRooms < ActiveRecord::Migration[7.1]
   def change
     create_table :remember_rooms do |t|
