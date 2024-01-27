@@ -105,7 +105,6 @@ RSpec.describe ChatRoomsController, type: :controller do
     end
 
     context 'when remember cannot be created' do
-
       it 'returns an unsuccessful response' do
         allow_any_instance_of(RememberRoom).to receive(:save).and_return(false)
         post :add_room_for_user, params: { user_id: user.id, chat_room_id: chat_room.id }

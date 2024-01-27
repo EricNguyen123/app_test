@@ -34,8 +34,7 @@ class MicropostsController < ApplicationController
     render json: { success: true, micropost: @micropost, html_content: }
   end
 
-  def show
-  end
+  def show; end
 
   private
 

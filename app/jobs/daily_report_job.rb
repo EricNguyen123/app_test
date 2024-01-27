@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# daily report
 class DailyReportJob
   include Sidekiq::Worker
 
@@ -11,12 +14,12 @@ class DailyReportJob
     new_posts = Micropost.microposts_yesterday.count
     new_comments = Micropost.all_micropost_yesterday.count - new_posts
     microposts = most_commented_post
-    report = <<~REPORT
+    <<~REPORT
       Báo cáo hàng ngày:
       - Số người dùng mới đăng ký: #{new_users}
       - Số bài đăng mới: #{new_posts}
       - Số bình luận mới: #{new_comments}
-      - Bài đăng được bình luận nhiều nhất: #{ microposts&.map do |micropost| "[#{micropost.content}], (#{ENV['HOST']}/microposts/#{micropost.id}) " end  }
+      - Bài đăng được bình luận nhiều nhất: #{microposts&.map { |micropost| "[#{micropost.content}], (#{ENV['HOST']}/microposts/#{micropost.id}) " }}
     REPORT
   end
 
@@ -44,5 +47,5 @@ class DailyReportJob
       counts += comments.count
     end
     counts
-  end 
+  end
 end
