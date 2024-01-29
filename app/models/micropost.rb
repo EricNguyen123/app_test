@@ -8,6 +8,8 @@ class Micropost < ApplicationRecord
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
   scope :without_micropost_id, -> { where(micropost_id: nil) }
+  scope :all_micropost_yesterday, -> { where(created_at: Date.yesterday.all_day) }
+  scope :microposts_yesterday, -> { where(created_at: Date.yesterday.all_day, micropost_id: nil) }
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
   validate :image_content_type

@@ -132,3 +132,9 @@ gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 gem 'importmap', '~> 0.1.0'
 
 gem 'hotwire-rails', '~> 0.1.3'
+
+gem 'sidekiq', '~> 7.2'
+
+gem 'sidekiq-scheduler', '~> 5.0'
+
+gem 'slack-ruby-client', '~> 2.2'
