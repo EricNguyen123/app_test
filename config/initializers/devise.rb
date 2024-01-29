@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# turbofail
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -15,13 +14,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '8f5cf6714f0b04883417f2479e5520c01fb90b07d16726590418d9a6f2d4c5362e5f3463c76d4a9ec8de33e484288bc5577fc88402d03d98dee1bd2d6edac478'
+  # config.secret_key = '5350340e0589e6781cff9f9b9d30e5f07bec1b5310e80ed2f919e7ebdc2b1a36b07c7f7c5b5b600b6df539a03d42ab592c05628246b24b47af94f0c39cdf99c3'
 
   config.navigational_formats = ['*/*', :html, :turbo_stream]
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  # config.parent_controller = 'TurboDeviseController'
+  # config.parent_controller = 'DeviseController'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -129,7 +128,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'f3a13d0d5274bc110e3308cf3bce1d609301b2833f05388fb64ba56b4d5e4f9edd1291d153fea73a3cf9c0cb840214ee126e1589fcc023c5781a14e95495d5f3'
+  # config.pepper = '86869f9b2ebea8b395e8b3ddd7bcd5e1fd085bd1661d89105f8403204d5f27c1b2af80385c848b42f457df56a3004af3b83158c7023654fdf5b008ab7765caeb'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -146,7 +145,7 @@ Devise.setup do |config|
   # without confirming their account.
   # Default is 0.days, meaning the user cannot access the website without
   # confirming their account.
-  # config.allow_unconfirmed_access_for = 2.days
+  config.allow_unconfirmed_access_for = 0
 
   # A period that the user is allowed to confirm their account before their
   # token becomes invalid. For example, if set to 3.days, the user can confirm
@@ -255,7 +254,7 @@ Devise.setup do |config|
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
-  # config.sign_out_all_scopes = true
+  config.sign_out_all_scopes = true
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like
@@ -275,6 +274,9 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
+  config.omniauth :facebook, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

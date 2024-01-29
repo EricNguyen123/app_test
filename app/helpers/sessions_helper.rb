@@ -18,19 +18,6 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token
   end
 
-  def current_user
-    if (user_id = session[:user_id])
-      @current_user ||= User.find_by(id: user_id)
-    elsif (user_id = cookies.encrypted[:user_id])
-      # raise
-      user = User.find_by(id: user_id)
-      if user&.authenticated?(:remember, cookies[:remember_token])
-        log_in user
-        @current_user = user
-      end
-    end
-  end
-
   def current_user?(user)
     user && user == current_user
   end
@@ -43,5 +30,14 @@ module SessionsHelper
     forget(current_user)
     session.delete(:user_id)
     @current_user = nil
+  end
+
+  def icon_login_with_third_party(title)
+    items = {
+      'GoogleOauth2' => { name: 'Google', image: 'google-18px.svg' },
+      'Facebook' => { name: 'Facebook', image: 'facebook-18px.svg' },
+      'GitHub' => { name: 'Github', image: 'github-18px.svg' }
+    }
+    items[title]
   end
 end

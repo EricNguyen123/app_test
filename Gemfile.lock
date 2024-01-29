@@ -513,7 +513,7 @@ DEPENDENCIES
   cable_ready
   capybara (= 3.37.1)
   debug
-  devise (~> 4.9, >= 4.9.2)
+  devise (~> 4.9)
   dotenv-rails
   esbuild-rails
   factory_bot_rails
