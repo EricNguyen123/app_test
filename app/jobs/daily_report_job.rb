@@ -15,11 +15,11 @@ class DailyReportJob
     new_comments = Micropost.all_micropost_yesterday.count - new_posts
     microposts = most_commented_post
     <<~REPORT
-      Báo cáo hàng ngày:
-      - Số người dùng mới đăng ký: #{new_users}
-      - Số bài đăng mới: #{new_posts}
-      - Số bình luận mới: #{new_comments}
-      - Bài đăng được bình luận nhiều nhất: #{microposts&.map { |micropost| "[#{micropost.content}], (#{ENV['HOST']}/microposts/#{micropost.id}) " }}
+    Daily report:
+      - Number of newly registered users: #{new_users}
+      - Number of new posts: #{new_posts}
+      - Number of new comments: #{new_comments}
+      - Most commented post: #{microposts&.map { |micropost| "[#{micropost.content}], (#{ENV['HOST']}/microposts/#{micropost.id}) " }}
     REPORT
   end
 
