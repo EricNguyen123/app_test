@@ -3,13 +3,16 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    confirmations: 'confirmations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
   mount Sidekiq::Web => '/sidekiq'
 
   root 'static_pages#home'
-  devise_for :users
+  
   get 'password_resets/new'
   get 'password_resets/edit'
-  get 'sessions/new'
   get 'users/new'
 
   get '/help', to: 'static_pages#help'
@@ -17,13 +20,6 @@ Rails.application.routes.draw do
   get '/contact', to: 'static_pages#contact'
   get '/signup', to: 'users#new'
 
-  delete '/logout',  to: 'sessions#destroy'
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-
-  get '/auth/:provider/callback', to: 'sessions#omniauth'
-
-  get '/settings', to: 'users#edit'
 
   resources :users do
     member do

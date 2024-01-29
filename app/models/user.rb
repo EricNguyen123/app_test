@@ -2,6 +2,10 @@
 
 # Model User
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable, :omniauthable,
+         :recoverable, :rememberable, :validatable, :confirmable, omniauth_providers: %i[github google_oauth2 facebook]
   attr_accessor :remember_token, :activation_token, :reset_token
 
   has_many :remember_rooms, dependent: :destroy
@@ -19,7 +23,6 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
-  has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   class << self
@@ -32,14 +35,17 @@ class User < ApplicationRecord
       SecureRandom.urlsafe_base64
     end
 
-    def login_with_third_party(req_evn)
-      find_or_create_by(uid: req_evn&.dig('omniauth.auth', 'uid'),
-                        provider: req_evn&.dig('omniauth.auth', 'provider')) do |user|
-        user.name = req_evn&.dig('omniauth.auth', 'info', 'name') || req_evn&.dig('omniauth.auth', 'info', 'nickname')
-        user.email = req_evn&.dig('omniauth.auth', 'info', 'email') || "#{user.name}@gmail.com"
-        user.password = SecureRandom.urlsafe_base64
+    def from_omniauth(auth)
+      return if auth.blank?
+      
+      find_or_create_by(uid: auth.uid, provider: auth.provider) do |user|
+        user.name = auth.info.name || auth.info.nickname
+        user.email = auth.info.email || "#{user.name}@gmail.com"
+        user.password = User.new_token
+        user.oauth_token = auth.credentials.token
       end
     end
+
   end
 
   def remember
