@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/controllers/confirmations_controller_spec.rb
 require 'rails_helper'
 
@@ -7,7 +9,7 @@ RSpec.describe ConfirmationsController, type: :controller do
 
     context 'with valid confirmation token' do
       before do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         get :show, params: { confirmation_token: user.confirmation_token }
       end
 
@@ -26,7 +28,7 @@ RSpec.describe ConfirmationsController, type: :controller do
 
     context 'with invalid confirmation token' do
       before do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         get :show, params: { confirmation_token: 'invalid_token' }
       end
 
@@ -45,7 +47,7 @@ RSpec.describe ConfirmationsController, type: :controller do
 
     context 'with valid confirmation token' do
       before do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         get :show, params: { confirmation_token: user.confirmation_token }
       end
 

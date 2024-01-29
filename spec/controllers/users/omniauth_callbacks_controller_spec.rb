@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 # spec/controllers/users/omniauth_callbacks_controller_spec.rb
 require 'rails_helper'
 require 'devise'
 
 RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   before do
-    request.env["devise.mapping"] = Devise.mappings[:user]
-    request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] 
+    request.env['devise.mapping'] = Devise.mappings[:user]
+    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:github]
   end
 
   describe '#github' do
@@ -18,7 +20,6 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       it 'completes user registration' do
         expect(User.count).to eq(1)
       end
-
     end
 
     context 'when the user does not persist' do
@@ -36,5 +37,4 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       end
     end
   end
-
 end

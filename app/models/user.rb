@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
     def from_omniauth(auth)
       return if auth.blank?
-      
+
       find_or_create_by(uid: auth.uid, provider: auth.provider) do |user|
         user.name = auth.info.name || auth.info.nickname
         user.email = auth.info.email || "#{user.name}@gmail.com"
@@ -45,7 +45,6 @@ class User < ApplicationRecord
         user.oauth_token = auth.credentials.token
       end
     end
-
   end
 
   def remember

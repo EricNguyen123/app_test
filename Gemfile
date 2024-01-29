@@ -137,4 +137,4 @@ gem 'sidekiq-scheduler', '~> 5.0'
 
 gem 'slack-ruby-client', '~> 2.2'
 
-gem "devise", "~> 4.9"
+gem 'devise', '~> 4.9'

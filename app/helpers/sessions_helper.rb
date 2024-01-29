@@ -33,13 +33,11 @@ module SessionsHelper
   end
 
   def icon_login_with_third_party(title)
-    case title
-    when "GoogleOauth2"
-      { name: 'Google', image: 'google-18px.svg' }
-    when "Facebook"
-      { name: 'Facebook', image: 'facebook-18px.svg' }
-    when "GitHub"
-      { name: 'Github', image: 'github-18px.svg' }
-    end
+    items = {
+      'GoogleOauth2' => { name: 'Google', image: 'google-18px.svg' },
+      'Facebook' => { name: 'Facebook', image: 'facebook-18px.svg' },
+      'GitHub' => { name: 'Github', image: 'github-18px.svg' }
+    }
+    items[title]
   end
 end
