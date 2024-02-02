@@ -1,6 +1,7 @@
 #!/bin/bash
 bundle check || bundle install
 bundle exec rails db:create
+bundle exec rails db:migrate:reset
 bundle exec rails db:migrate
 bundle exec rails db:prepare
 
