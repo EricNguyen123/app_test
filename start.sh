@@ -1,8 +1,20 @@
 #!/bin/bash
 bundle check || bundle install
-bundle exec rails db:create
-bundle exec rails db:migrate:reset
-bundle exec rails db:migrate
+
+if bundle exec rails db:migrate:status; then
+  echo "Database exists"
+else
+  echo "Database does not exist, creating..."
+  bundle exec rails db:create
+fi
+
+if bundle exec rails db:migrate:status | grep 'down'; then
+  echo "New migration found, updating database..."
+  bundle exec rails db:migrate
+else
+  echo "No new migration found"
+fi
+
 bundle exec rails db:prepare
 
 if [ -f /app_test/tmp/pids/server.pid ]; then
