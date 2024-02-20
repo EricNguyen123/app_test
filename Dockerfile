@@ -5,12 +5,11 @@ WORKDIR /app_test
 ADD Gemfile /app_test/Gemfile
 ADD Gemfile.lock /app_test/Gemfile.lock
 
-RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 RUN chown -R $USER:$USER /app_test
 RUN chmod -R 755 /app_test
 
-RUN bundle install
+RUN /bin/sh -c bundle install
 COPY start.sh /usr/bin/
 RUN chmod +x /usr/bin/start.sh
 
