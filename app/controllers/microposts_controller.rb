@@ -2,7 +2,6 @@
 
 # Controller responsible for managing microposts.
 class MicropostsController < ApplicationController
-  before_action :authenticate_user!
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: %i[destroy update]
   before_action :find_micropost, only: %i[show]

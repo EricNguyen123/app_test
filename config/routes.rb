@@ -38,8 +38,8 @@ Rails.application.routes.draw do
   mount ActionCable.server, at: '/cable'
 
   namespace :api do
-    namespace :v1 do 
-      resources :microposts, only: [:index, :create, :update, :destroy, :show]
+    namespace :v1 do
+      resources :microposts, only: %i[index create update destroy show]
     end
   end
 end
