@@ -36,4 +36,10 @@ Rails.application.routes.draw do
   post '/add_user/:user_id/:chat_room_id', to: 'chat_rooms#add_room_for_user'
   get '/add_confirm/:id', to: 'chat_rooms#add_confirm'
   mount ActionCable.server, at: '/cable'
+
+  namespace :api do
+    namespace :v1 do
+      resources :microposts, only: %i[index create update destroy show]
+    end
+  end
 end

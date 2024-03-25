@@ -1,0 +1,64 @@
+version: '3'
+services:
+  db:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: huy@123456
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: huy@123456
+    ports:
+      - "3306:3306"
+    networks:
+      - mynet
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - mynet
+  sidekiq:
+    build: .
+    container_name: sidekiq
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app_test
+    environment:
+      REDIS_URL: redis://redis:6379/12
+      DB_USER: root
+      DB_NAME: sample_db
+      DB_PASSWORD: huy@123456
+      DB_HOST: db
+    networks:
+      - mynet
+  web:
+    container_name: app_test
+    build: .
+    command: bash -c "start.sh"
+    volumes:
+      - ".:/app_test"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    links:
+      - db
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379/12
+      DB_USER: root
+      DB_NAME: sample_db
+      DB_PASSWORD: huy@123456
+      DB_HOST: db
+    networks:
+      - mynet
+networks:
+  mynet:
+    driver: bridge 
