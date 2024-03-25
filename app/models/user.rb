@@ -2,10 +2,13 @@
 
 # Model User
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
-         :recoverable, :rememberable, :validatable, :confirmable, omniauth_providers: %i[github google_oauth2 facebook]
+         :recoverable, :rememberable, :validatable, :confirmable,
+         :jwt_authenticatable, { jwt_revocation_strategy: self, omniauth_providers: %i[github google_oauth2 facebook] }
+
   attr_accessor :remember_token, :activation_token, :reset_token
 
   has_many :remember_rooms, dependent: :destroy

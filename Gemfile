@@ -125,7 +125,7 @@ gem 'omniauth-google-oauth2'
 
 gem 'actioncable', '~> 7.0'
 gem 'cable_ready'
-gem 'rack-cors', '~> 1.1', '>= 1.1.1'
+gem 'rack-cors'
 
 gem 'importmap', '~> 0.1.0'
 
@@ -138,3 +138,5 @@ gem 'sidekiq-scheduler', '~> 5.0'
 gem 'slack-ruby-client', '~> 2.2'
 
 gem 'devise', '~> 4.9'
+
+gem 'devise-jwt'
